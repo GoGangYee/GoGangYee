@@ -1,4 +1,4 @@
-package go;
+package main;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -17,8 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-public class Local extends JFrame{
-	 Local(){
+public class LocalView extends JFrame{
+	 LocalView(){
 		 setTitle("고갱이 - 지역별 비교");
 		
 		
@@ -166,6 +166,6 @@ public class Local extends JFrame{
 	 }
 	 
 	 public static void main(String[] args) {
-		 new Local();
+		 new LocalView();
 	 }
 }
