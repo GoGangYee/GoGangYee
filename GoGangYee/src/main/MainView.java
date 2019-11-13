@@ -63,8 +63,9 @@ public class MainView {
 	
 	
 	}
-//	public static void main(String[] args) {
-//		new mainView();
-//
-//	}
+	public static void main(String[] args) {
+		new mainView();
+
+	}
 }
+
