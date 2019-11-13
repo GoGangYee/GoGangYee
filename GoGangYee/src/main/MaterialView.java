@@ -13,15 +13,16 @@ public class MaterialView extends JFrame{
 		showSouth();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(650, 400);
+		setSize(800, 500);
 		setVisible(true);
 		
 	}
 	
 	public void showNorth() {
-		JPanel p1 = new JPanel(new BorderLayout());
-		JPanel p1_1 = new JPanel(new GridLayout(0, 2));
-		JPanel p1_1_1 = new JPanel(new GridLayout(0, 5));
+		JPanel p1 = new JPanel(new GridLayout(0, 1));
+		JPanel p1_0 = new JPanel();
+		JPanel p1_1 = new JPanel();
+		JPanel p1_2 = new JPanel();
 		JPanel p2 = new JPanel();
 		JPanel panel = new JPanel(new GridLayout(0, 2));
 		
@@ -32,17 +33,23 @@ public class MaterialView extends JFrame{
 		JLabel year = new JLabel("2018³â");
 		JLabel month = new JLabel("¿ù");
 		JLabel day = new JLabel("ÀÏ");
-		JTextField monthTF = new JTextField();
+		JTextField monthTF = new JTextField(2);
+		JTextField dayTF = new JTextField(2);
 		JComboBox localSelect = new JComboBox();
 		
-		p1_1_1.add(year);
-		p1_1_1.add(monthTF);
+		
 		p1_1.add(txt2);
 		p1_1.add(localSelect);
-		p1_1.add(txt3);
-		p1_1.add(p1_1_1);
-		p1.add("North", txt1);
-		p1.add("South", p1_1);
+		p1_2.add(txt3);
+		p1_2.add(year);
+		p1_2.add(monthTF);
+		p1_2.add(day);
+		p1_2.add(dayTF);
+		p1_1.add(p1_2);
+		p1_0.add(txt1);
+		p1.add(p1_0);
+		p1.add(p1_1);
+		p1.add(p1_2);
 		panel.add(p1);
 		panel.add(p2);
 		

@@ -148,9 +148,9 @@ public class ModifyDB {
 	}
 	
 	
-//	public static void main(String[] args) {
-//		new modifyDB();
-//
-//	}
+	public static void main(String[] args) {
+		new modifyDB();
+
+	}
 
 }
