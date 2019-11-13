@@ -146,11 +146,4 @@ public class ModifyDB {
 			add(panel, BorderLayout.CENTER);
 		}
 	}
-	
-	
-	public static void main(String[] args) {
-		new modifyDB();
-
-	}
-
 }

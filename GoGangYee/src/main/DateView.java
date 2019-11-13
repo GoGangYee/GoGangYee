@@ -75,8 +75,4 @@ public class DateView extends JFrame{
 		setSize(650,400);
 		setVisible(true);
 	}
-	public static void main(String[] args) {
-		new DateView();
-
-	}
 }
