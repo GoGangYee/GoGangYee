@@ -41,10 +41,11 @@ public class DateView extends JFrame{
 		
 		LocalChooseC.setPreferredSize(new Dimension(150,25));
 		label.setFont(new Font("¸¼Àº°íµñ",Font.PLAIN,30));
+		HelpB.setFont(new Font("¸¼Àº°íµñ",Font.BOLD,13));
 		p2.setBorder(BorderFactory.createEmptyBorder(0,0,0,70));
 		p.setBorder(BorderFactory.createEmptyBorder(10,20,0,0));
-		p4.setBorder(BorderFactory.createEmptyBorder(0,580,0,0));
-		p5.setBorder(BorderFactory.createEmptyBorder(0,0,55,0));
+		p4.setBorder(BorderFactory.createEmptyBorder(0,730,0,0));
+		p5.setBorder(BorderFactory.createEmptyBorder(0,100,60,0));
 		
 		p3.add(label);
 		p1.add(LocalChooseL);
@@ -71,8 +72,7 @@ public class DateView extends JFrame{
 		//getContentPane().add(p6,"Center");
 		getContentPane().add(p4,"South");
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(650,400);
+		setSize(800,500);
 		setVisible(true);
 	}
 }
