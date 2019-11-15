@@ -87,7 +87,9 @@ public class MainView extends JFrame{
 	}
 	
 	public static void main(String[] args) {
-
-		new MainView();
+		new MaterialView();
+//		new MainView();
+//		new DateView();
+//		new LocalView();
 	}
 }
