@@ -55,7 +55,7 @@ public class ModifyDB extends JFrame{
          JPanel p8 = new JPanel(new GridLayout(2,0)); // 체크박스 2
          
          //JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
-         JPanel panel = new JPanel(new GridLayout(4,0));
+         JPanel panel = new JPanel(new GridLayout(8,0));
          
          JLabel lbl2 = new JLabel("지역 선택");
          JLabel lbl3 = new JLabel("날짜 입력 : 2018년 ");
