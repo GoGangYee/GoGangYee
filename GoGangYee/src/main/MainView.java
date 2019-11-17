@@ -9,32 +9,36 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class MainView extends JFrame{
+	JPanel p=new JPanel();
+	JPanel p1=new JPanel(new FlowLayout());
+	JPanel p2=new JPanel(new GridLayout(2,2,10,10));
+	JPanel p3=new JPanel(new GridLayout(2,1,5,5));
+	JPanel p4=new JPanel();
+	
+	JLabel label=new JLabel("고  갱  이");
+	JLabel FileNameL=new JLabel("");
+	JButton search=new JButton("찾기");
+	JButton commit=new JButton("확인");
+	JButton material=new JButton("물질별 비교");
+	JButton local=new JButton("지역별 비교");
+	JButton date=new JButton("날짜별 비교");
+	JButton MandD=new JButton("수정 및 삭제");
+	JButton help=new JButton("?");
+	
 	MainView(){
 		setTitle("Main View");
 		EtchedBorder eborder;
-		 
-		JPanel p=new JPanel();
-		JPanel p1=new JPanel(new FlowLayout());
-		JPanel p2=new JPanel(new GridLayout(2,2,10,10));
-		JPanel p3=new JPanel(new GridLayout(2,1,5,5));
-		JPanel p4=new JPanel();
-		
-		JLabel label=new JLabel("고  갱  이");
-		JLabel FileNameL=new JLabel("");
-		JButton search=new JButton("찾기");
-		JButton commit=new JButton("확인");
-		JButton material=new JButton("물질별 비교");
-		JButton local=new JButton("지역별 비교");
-		JButton date=new JButton("날짜별 비교");
-		JButton MandD=new JButton("수정 및 삭제");
-		JButton help=new JButton("?");
 		
 		eborder=new EtchedBorder(EtchedBorder.RAISED);
 		FileNameL.setBorder(eborder);
@@ -77,6 +81,46 @@ public class MainView extends JFrame{
 			}
 		});
 		
+		local.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				new LocalView();
+			}
+		});
+		
+		material.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				new MaterialView();
+			}
+		});
+		
+		help.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "이산화질소\r\n" + 
+						" * 코와 인후자극\r\n" + 
+						" * 호흡기에 나쁜 영향\r\n" + 
+						"\r\n" + 
+						"오존\r\n" + 
+						" * 눈 자극, 농작물 피해\r\n" + 
+						"\r\n" + 
+						"일산화탄소\r\n" + 
+						" * 산소공급 저조, 두통, 현기증 유발\r\n" + 
+						"\r\n" + 
+						"아황산가스\r\n" + 
+						" * 인체호흡기 질환\r\n" + 
+						" * 식물의 성장 방해\r\n" + 
+						"\r\n" + 
+						"미세먼지\r\n" + 
+						" * 아황산가스와 결합하여 호흡기질환 유발\r\n" + 
+						"\r\n" + 
+						"초미세먼지\r\n" + 
+						" * 아황산가스와 결합하여 호흡기질환 유발\r\n" + 
+						"\r\n" + 
+						"출처 - 수원시청","물질별 설명",JOptionPane.WARNING_MESSAGE);
+			}
+		});
+		
+		search.addActionListener(new OpenActionListener());
+		
 		getContentPane().add(p3,"North");
 		getContentPane().add(p2,"Center");
 		getContentPane().add(p4,"South");
@@ -86,11 +130,28 @@ public class MainView extends JFrame{
 		setVisible(true);
 	}
 	
+	class OpenActionListener implements ActionListener {
+		JFileChooser chooser;
+		
+		OpenActionListener() {
+			chooser = new JFileChooser(); // 파일 다이얼로그 생성
+		}
+		
+		public void actionPerformed(ActionEvent e) {
+			int ret = chooser.showOpenDialog(null);
+			if(ret != JFileChooser.APPROVE_OPTION) { // 사용자가 창을 강제로 닫았거나 취소 버튼을 누른 경우
+				JOptionPane.showMessageDialog(null, "파일을 선택하지 않았습니다.", "경고", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			
+			// 사용자가 파일을 선택하고 "열기" 버튼을 누른 경우
+			String filePath = chooser.getSelectedFile().getPath(); // 파일 경로명을 알아온다.
+			FileNameL.setText(filePath);
+			System.out.println(FileNameL.getText());
+		}
+	}
+	
 	public static void main(String[] args) {
-		new MaterialView();
-//		new MainView();
-//		new DateView();
-//		new LocalView();
-//		new ModifyDB();
+		new MainView();
 	}
 }

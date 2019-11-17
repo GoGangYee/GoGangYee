@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -13,6 +15,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -29,13 +32,12 @@ public class MaterialView extends JFrame{
 		showCenter();
 		showSouth();
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(800, 500);
 		setVisible(true);
-		
 	}
 	
 	public void showNorth() {
+		String[] region = {"강남구","강남대로","강동구","강변북로","강북구","강서구","공항대로","관악구","관악산","광진구","구로구","궁동","금천구","남산","노원구","도봉구","도산대로","동대문구","동작구","도산대로","동대문구","동작구","동작대로","마포구","북한산","서대문구","서초구","성동구","성북구","세곡","송파구","시흥대로","신촌로","양천구","영등포구","영등포로","용산구","은평구","정릉로","종로","종로구","중구","중랑구","천호대로","청계천로","한강대로","행주","홍릉로","화랑로"};
 		JPanel p1 = new JPanel(new BorderLayout());	// 지역, 날짜선택 영역
 		JPanel p1_0 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel p1_1 = new JPanel(new FlowLayout(FlowLayout.LEFT)); // 지역선택
@@ -58,7 +60,7 @@ public class MaterialView extends JFrame{
 		JTextField monthTF2 = new JTextField(2);
 		JTextField dayTF1 = new JTextField(2);
 		JTextField dayTF2 = new JTextField(2);
-		JComboBox localSelect = new JComboBox();
+		JComboBox<String> localSelect = new JComboBox<>(region);
 		JButton help = new JButton("?");
 		JButton apply = new JButton("적용");
 		JLabel txt1 = new JLabel("물질별 비교");
@@ -155,7 +157,32 @@ public class MaterialView extends JFrame{
 		
 		panel.add(helpB);
 		
+		helpB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "이산화질소\r\n" + 
+						" * 코와 인후자극\r\n" + 
+						" * 호흡기에 나쁜 영향\r\n" + 
+						"\r\n" + 
+						"오존\r\n" + 
+						" * 눈 자극, 농작물 피해\r\n" + 
+						"\r\n" + 
+						"일산화탄소\r\n" + 
+						" * 산소공급 저조, 두통, 현기증 유발\r\n" + 
+						"\r\n" + 
+						"아황산가스\r\n" + 
+						" * 인체호흡기 질환\r\n" + 
+						" * 식물의 성장 방해\r\n" + 
+						"\r\n" + 
+						"미세먼지\r\n" + 
+						" * 아황산가스와 결합하여 호흡기질환 유발\r\n" + 
+						"\r\n" + 
+						"초미세먼지\r\n" + 
+						" * 아황산가스와 결합하여 호흡기질환 유발\r\n" + 
+						"\r\n" + 
+						"출처 - 수원시청","물질별 설명",JOptionPane.WARNING_MESSAGE);
+			}
+		});
+		
 		add(panel, BorderLayout.SOUTH);
 	}
-
 }

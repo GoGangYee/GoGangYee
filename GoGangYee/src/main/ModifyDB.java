@@ -17,10 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-
 public class ModifyDB extends JFrame{
       ModifyDB() {
-         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
          setTitle("수정 및 삭제");
          
          setLayout(new BorderLayout(10,10));
@@ -44,7 +42,7 @@ public class ModifyDB extends JFrame{
          add(panel, BorderLayout.NORTH);
       }
       void showWest() {
-         String[] region = {"강서구", "서초구"};
+         String[] region = {"강남구","강남대로","강동구","강변북로","강북구","강서구","공항대로","관악구","관악산","광진구","구로구","궁동","금천구","남산","노원구","도봉구","도산대로","동대문구","동작구","도산대로","동대문구","동작구","동작대로","마포구","북한산","서대문구","서초구","성동구","성북구","세곡","송파구","시흥대로","신촌로","양천구","영등포구","영등포로","용산구","은평구","정릉로","종로","종로구","중구","중랑구","천호대로","청계천로","한강대로","행주","홍릉로","화랑로"};
          JPanel p2 = new JPanel();
          JPanel p3 = new JPanel();
          
@@ -55,7 +53,7 @@ public class ModifyDB extends JFrame{
          JPanel p8 = new JPanel(new GridLayout(2,0)); // 체크박스 2
          
          //JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
-         JPanel panel = new JPanel(new GridLayout(8,0));
+         JPanel panel = new JPanel(new GridLayout(4,0));
          
          JLabel lbl2 = new JLabel("지역 선택");
          JLabel lbl3 = new JLabel("날짜 입력 : 2018년 ");
