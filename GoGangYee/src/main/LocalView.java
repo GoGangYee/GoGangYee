@@ -26,7 +26,7 @@ public class LocalView extends JFrame{
 		 setLayout(new BorderLayout());
 		 
 		 JPanel content=new JPanel(new GridLayout(1,2));
-		 JPanel left=new JPanel(new BorderLayout());	//왼쪽. 지역별|그래프
+		 JPanel left=new JPanel(new BorderLayout());
 		 //left.setLayout(new GridLayout(2,1));
 		 JLabel name=new JLabel("지  역  별     비  교");
 		 name.setFont(new Font("맑은고딕",Font.BOLD,20));
@@ -44,6 +44,7 @@ public class LocalView extends JFrame{
 		 
 		 //JPanel right=new JPanel(new GridLayout(4,1,0,20));	//물질 선택, 지역 선택, 날짜 넣을 부분
 		 JPanel right=new JPanel(new GridLayout(3,1,0,20));
+		 right.setBorder(BorderFactory.createEmptyBorder(30,0,0,0));
 		 
 		 JPanel materials=new JPanel(new GridLayout(2,1));	//gas(ppm), dust(㎍)넣을 부분
 		 
@@ -62,6 +63,7 @@ public class LocalView extends JFrame{
 		 materials.add(radioBtns);
 		 
 		 JPanel chkBoxes=new JPanel(new GridLayout(1,2,0,10));	//가스와 미세먼지 각 체크박스를 넣을 공간입니다.
+		 //chkBoxes.setBorder(BorderFactory.createEmptyBorder(10,0,0,0));
 		 JPanel gas=new JPanel();
 		 gas.setLayout(new GridLayout(4,1));
 		 JCheckBox no2=new JCheckBox("이산화질소");
@@ -98,7 +100,7 @@ public class LocalView extends JFrame{
 		 
 		 
 		 JPanel regions=new JPanel(new GridLayout(4,2,0,5));
-		 regions.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
+		 //regions.setBorder(BorderFactory.createEmptyBorder(30,0,0,0));
 		 JLabel r1=new JLabel("지역 1");
 		 r1.setFont(new Font("맑은고딕",Font.BOLD,15));
 		 JTextField rt1=new JTextField();
@@ -135,6 +137,7 @@ public class LocalView extends JFrame{
 		 JLabel dayLabel=new JLabel("일");
 		 dayLabel.setFont(new Font("맑은고딕",Font.BOLD,15));
 
+		 //date.setBorder(BorderFactory.createEmptyBorder(50,0,0,0));
 		 date.add(d);
 		 date.add(year);
 		 date.add(month);
@@ -147,13 +150,16 @@ public class LocalView extends JFrame{
 		 
 		 add(content,BorderLayout.CENTER);
 		 
-		 JPanel btns=new JPanel(new GridLayout(1,2,5,0));
+		 //JPanel btns=new JPanel(new GridLayout(1,2,5,0));
+		 JPanel btns=new JPanel(new FlowLayout(FlowLayout.LEFT,100,0));
 		 JButton apply=new JButton("적용");
-		 apply.setFont(new Font("맑은고딕",Font.BOLD,12));
-		 JButton help=new JButton("?");
-		 help.setFont(new Font("맑은고딕",Font.BOLD,12));
+		 apply.setFont(new Font("맑은고딕",Font.BOLD,13));
+		 apply.setPreferredSize(new Dimension(100,28));
 		 
-		 btns.setBorder(BorderFactory.createEmptyBorder(0,630,10,10));
+		 JButton help=new JButton("?");
+		 help.setFont(new Font("맑은고딕",Font.BOLD,13));
+		 
+		 btns.setBorder(BorderFactory.createEmptyBorder(0,435,5,5));
 		 btns.add(apply);
 		 btns.add(help);
 		 
