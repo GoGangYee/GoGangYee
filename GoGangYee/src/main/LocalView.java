@@ -10,25 +10,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 
 public class LocalView extends JFrame{
 	 LocalView(){
-		 setTitle("고갱이 - 지역별 비교");	
-		 
+		 setTitle("고갱이");	
 		 setLayout(new BorderLayout());
 		 
 		 JPanel content=new JPanel(new GridLayout(1,2));
 		 JPanel left=new JPanel(new BorderLayout());
-		 //left.setLayout(new GridLayout(2,1));
 		 JLabel name=new JLabel("지  역  별     비  교");
 		 name.setFont(new Font("맑은고딕",Font.BOLD,20));
 		 name.setBorder(BorderFactory.createEmptyBorder(0,90,0,0));
@@ -43,30 +42,13 @@ public class LocalView extends JFrame{
 		 content.add(left);
 		 
 		 
-		 //JPanel right=new JPanel(new GridLayout(4,1,0,20));	//물질 선택, 지역 선택, 날짜 넣을 부분
-		 JPanel right=new JPanel(new GridLayout(3,1,0,20));
-		 right.setBorder(BorderFactory.createEmptyBorder(30,0,0,0));
-		 
-		 JPanel materials=new JPanel(new GridLayout(2,1));	//gas(ppm), dust(㎍)넣을 부분
-		 
-		 JPanel radioBtns=new JPanel(new GridLayout(1,2,50,0));
-		 ButtonGroup rdo=new ButtonGroup();
-		 JRadioButton ppm=new JRadioButton("ppm");
-		 ppm.setFont(new Font("맑은고딕",Font.BOLD,15));
-		 JRadioButton dusts=new JRadioButton("㎍");
-		 dusts.setFont(new Font("맑은고딕",Font.BOLD,15));
-		 rdo.add(ppm);
-		 rdo.add(dusts);
-		 
-		 radioBtns.add(ppm);
-		 radioBtns.add(dusts);
-		 radioBtns.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
-		 materials.add(radioBtns);
-		 
-		 JPanel chkBoxes=new JPanel(new GridLayout(1,2,0,10));	//가스와 미세먼지 각 체크박스를 넣을 공간입니다.
-		 //chkBoxes.setBorder(BorderFactory.createEmptyBorder(10,0,0,0));
-		 JPanel gas=new JPanel();
-		 gas.setLayout(new GridLayout(4,1));
+		 JPanel right=new JPanel(new BorderLayout());	//물질 선택, 지역 선택, 날짜 넣을 부분
+				 
+		 JPanel materials=new JPanel(new GridLayout(1,2));	//gas(ppm), dust(㎍)넣을 부분
+		 materials.setBorder(BorderFactory.createEmptyBorder(50,0,0,0));
+
+
+		 Box gas=Box.createVerticalBox();
 		 JCheckBox no2=new JCheckBox("이산화질소");
 		 no2.setFont(new Font("맑은고딕",Font.PLAIN,15));
 		 JCheckBox ozone=new JCheckBox("오존");
@@ -81,11 +63,10 @@ public class LocalView extends JFrame{
 		 gas.add(co2);
 		 gas.add(so2);
 		 
-		 chkBoxes.add(gas);
+		 materials.add(gas);
 		
 		 
-		 JPanel dust=new JPanel();
-		 dust.setLayout(new GridLayout(2,1));
+		 Box dust=Box.createVerticalBox();
 		 JCheckBox finedust=new JCheckBox("미세먼지");
 		 finedust.setFont(new Font("맑은고딕",Font.PLAIN,15));
 		 JCheckBox ultrafinedust=new JCheckBox("초미세먼지");
@@ -94,14 +75,16 @@ public class LocalView extends JFrame{
 		 dust.add(finedust);
 		 dust.add(ultrafinedust);
 		
-		 chkBoxes.add(dust);
+		gas.setBorder(new TitledBorder (new EtchedBorder(), " ppm "));
+		dust.setBorder(new TitledBorder (new EtchedBorder(), " μg "));
+
+		 materials.add(dust);
 		 
-		 materials.add(chkBoxes);
-		 right.add(materials);
+		 right.add(materials,BorderLayout.NORTH);
 		 
 		 
 		 JPanel regions=new JPanel(new GridLayout(4,2,0,5));
-		 //regions.setBorder(BorderFactory.createEmptyBorder(30,0,0,0));
+		 regions.setBorder(BorderFactory.createEmptyBorder(20,0,0,0));
 		 JLabel r1=new JLabel("지역 1");
 		 r1.setFont(new Font("맑은고딕",Font.BOLD,15));
 		 JTextField rt1=new JTextField();
@@ -124,7 +107,7 @@ public class LocalView extends JFrame{
 		 regions.add(r4);
 		 regions.add(rt4);
 		 
-		 right.add(regions);
+		 right.add(regions,BorderLayout.CENTER);
 		 
 		 JPanel date=new JPanel(new FlowLayout());
 		 JLabel d=new JLabel("날짜    ");
@@ -137,31 +120,33 @@ public class LocalView extends JFrame{
 		 JTextField day=new JTextField(5);
 		 JLabel dayLabel=new JLabel("일");
 		 dayLabel.setFont(new Font("맑은고딕",Font.BOLD,15));
+		 
+		 JButton apply=new JButton("적용");
+		 apply.setFont(new Font("맑은고딕",Font.BOLD,13));
+		 apply.setPreferredSize(new Dimension(80,28));
 
-		 //date.setBorder(BorderFactory.createEmptyBorder(50,0,0,0));
+
+		 date.setBorder(BorderFactory.createEmptyBorder(20,0,30,0));
 		 date.add(d);
 		 date.add(year);
 		 date.add(month);
 		 date.add(monthLabel);
 		 date.add(day);
 		 date.add(dayLabel);
+		 date.add(apply);
 		 
-		 right.add(date);
+		 right.add(date,BorderLayout.SOUTH);
 		 content.add(right);
 		 
 		 add(content,BorderLayout.CENTER);
 		 
-		 //JPanel btns=new JPanel(new GridLayout(1,2,5,0));
+		 
 		 JPanel btns=new JPanel(new FlowLayout(FlowLayout.LEFT,100,0));
-		 JButton apply=new JButton("적용");
-		 apply.setFont(new Font("맑은고딕",Font.BOLD,13));
-		 apply.setPreferredSize(new Dimension(100,28));
 		 
 		 JButton help=new JButton("?");
 		 help.setFont(new Font("맑은고딕",Font.BOLD,13));
 		 
-		 btns.setBorder(BorderFactory.createEmptyBorder(0,435,5,5));
-		 btns.add(apply);
+		 btns.setBorder(BorderFactory.createEmptyBorder(0,635,5,5));
 		 btns.add(help);
 		 
 		 add(btns,BorderLayout.SOUTH);
