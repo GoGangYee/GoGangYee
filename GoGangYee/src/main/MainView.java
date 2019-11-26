@@ -37,7 +37,7 @@ public class MainView extends JFrame{
 	JButton help=new JButton("?");
 	
 	MainView(){
-		setTitle("Main View");
+		setTitle("∞Ì∞ª¿Ã");
 		EtchedBorder eborder;
 		
 		eborder=new EtchedBorder(EtchedBorder.RAISED);

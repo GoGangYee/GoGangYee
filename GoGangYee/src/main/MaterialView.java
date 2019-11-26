@@ -17,7 +17,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
@@ -25,7 +24,7 @@ import javax.swing.border.TitledBorder;
 public class MaterialView extends JFrame{
 
 	public MaterialView() {
-		setTitle("Material View");
+		setTitle("∞Ì∞ª¿Ã");
 		
 		setLayout(new BorderLayout(10, 10));
 		showNorth();
