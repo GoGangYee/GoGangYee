@@ -7,6 +7,13 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -128,6 +135,92 @@ public class MainView extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(800,500);
 		setVisible(true);
+		
+		commit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Connection conn=null;
+				Statement stmt=null;
+				ResultSet rs=null;
+				String url="jdbc:mysql://localhost/gogang?characterEncoding=UTF-8&serverTimezone=UTC";
+				
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					
+					conn=DriverManager.getConnection(url,"root","Pringle!135");
+					//연결
+					stmt=conn.createStatement();
+					//String sql="LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/pollution_new.csv' INTO TABLE gogang FIELDS TERMINATED BY ',';";
+					String sql="LOAD DATA INFILE '";
+					sql+=FileNameL.getText();
+					sql+="' INTO TABLE gogang FIELDS TERMINATED BY ','";
+					sql=sql.replace("\\","/");
+					System.out.println(sql);
+					rs=stmt.executeQuery(sql);
+				}
+				catch(ClassNotFoundException e1) {
+					System.out.println("드라이버 로딩 실패");
+				}
+				catch(SQLException e1) {
+					System.out.println("에러: "+e1);
+				}
+				finally {
+					try {
+						if(conn !=null && !conn.isClosed()) {
+							conn.close();
+						}
+					}
+				
+				catch(SQLException e1) {
+					e1.printStackTrace();
+				}
+				}
+			}
+		});
+		
+		addWindowListener(new WindowAdapter(){
+			public void windowClosing(WindowEvent e) {
+				Connection conn=null;
+				Statement stmt1=null;
+				ResultSet rs1=null;
+				int rs=0;
+				String url="jdbc:mysql://localhost/gogang?characterEncoding=UTF-8&serverTimezone=UTC";
+				
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					
+					conn=DriverManager.getConnection(url,"root","Pringle!135");
+					//연결
+					stmt1=conn.createStatement();
+				
+					String sql="delete from gogang";
+					String sql1="select * from gogang " + 
+							"into outfile 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/gogang.csv' " + 
+							"character set utf8 " + 
+							"fields terminated by ';' " + 
+							"lines terminated by '\n'";
+					
+					rs1=stmt1.executeQuery(sql1);
+					rs=stmt1.executeUpdate(sql);
+				}
+				catch(ClassNotFoundException e1) {
+					System.out.println("드라이버 로딩 실패");
+				}
+				catch(SQLException e1) {
+					System.out.println("에러: "+e1);
+				}
+				finally {
+					try {
+						if(conn !=null && !conn.isClosed()) {
+							conn.close();
+						}
+					}
+				
+				catch(SQLException e1) {
+					e1.printStackTrace();
+				}
+				}
+			}		
+		});
 	}
 	
 	class OpenActionListener implements ActionListener {
