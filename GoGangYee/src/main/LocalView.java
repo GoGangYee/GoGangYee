@@ -11,12 +11,13 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
@@ -28,6 +29,7 @@ public class LocalView extends JFrame{
 		 
 		 JPanel content=new JPanel(new GridLayout(1,2));
 		 JPanel left=new JPanel(new BorderLayout());
+		 //left.setLayout(new GridLayout(2,1));
 		 JLabel name=new JLabel("¡ˆ  ø™  ∫∞     ∫Ò  ±≥");
 		 name.setFont(new Font("∏º¿∫∞ÌµÒ",Font.BOLD,20));
 		 name.setBorder(BorderFactory.createEmptyBorder(0,90,0,0));
@@ -47,16 +49,23 @@ public class LocalView extends JFrame{
 		 JPanel materials=new JPanel(new GridLayout(1,2));	//gas(ppm), dust(ß∂)≥÷¿ª ∫Œ∫–
 		 materials.setBorder(BorderFactory.createEmptyBorder(50,0,0,0));
 
+		 ButtonGroup radioBtns=new ButtonGroup();	//π∞¡˙ ¡ﬂ∫π º±≈√ πÊ¡ˆ∏¶ ¿ß«— πˆ∆∞ ±◊∑Ï
+
 
 		 Box gas=Box.createVerticalBox();
-		 JCheckBox no2=new JCheckBox("¿ÃªÍ»≠¡˙º“");
-		 no2.setFont(new Font("∏º¿∫∞ÌµÒ",Font.PLAIN,15));
-		 JCheckBox ozone=new JCheckBox("ø¿¡∏");
-		 ozone.setFont(new Font("∏º¿∫∞ÌµÒ",Font.PLAIN,15));
-		 JCheckBox co2=new JCheckBox("¿ÃªÍ»≠≈∫º“");
-		 co2.setFont(new Font("∏º¿∫∞ÌµÒ",Font.PLAIN,15));
-		 JCheckBox so2=new JCheckBox("æ∆»≤ªÍ∞°Ω∫");
-		 so2.setFont(new Font("∏º¿∫∞ÌµÒ",Font.PLAIN,15));
+		 JRadioButton no2=new JRadioButton("¿ÃªÍ»≠¡˙º“");
+		 no2.setFont(new Font("∏º¿∫∞ÌµÒ",Font.BOLD,13));
+		 JRadioButton ozone=new JRadioButton("ø¿¡∏");
+		 ozone.setFont(new Font("∏º¿∫∞ÌµÒ",Font.BOLD,13));
+		 JRadioButton co2=new JRadioButton("¿ÃªÍ»≠≈∫º“");
+		 co2.setFont(new Font("∏º¿∫∞ÌµÒ",Font.BOLD,13));
+		 JRadioButton so2=new JRadioButton("æ∆»≤ªÍ∞°Ω∫");
+		 so2.setFont(new Font("∏º¿∫∞ÌµÒ",Font.BOLD,13));
+		 
+		 radioBtns.add(no2);
+		 radioBtns.add(ozone);
+		 radioBtns.add(co2);
+		 radioBtns.add(so2);
 		 
 		 gas.add(no2);
 		 gas.add(ozone);
@@ -67,10 +76,13 @@ public class LocalView extends JFrame{
 		
 		 
 		 Box dust=Box.createVerticalBox();
-		 JCheckBox finedust=new JCheckBox("πÃºº∏’¡ˆ");
-		 finedust.setFont(new Font("∏º¿∫∞ÌµÒ",Font.PLAIN,15));
-		 JCheckBox ultrafinedust=new JCheckBox("√ πÃºº∏’¡ˆ");
-		 ultrafinedust.setFont(new Font("∏º¿∫∞ÌµÒ",Font.PLAIN,15));
+		 JRadioButton finedust=new JRadioButton("πÃºº∏’¡ˆ");
+		 finedust.setFont(new Font("∏º¿∫∞ÌµÒ",Font.BOLD,13));
+		 JRadioButton ultrafinedust=new JRadioButton("√ πÃºº∏’¡ˆ");
+		 ultrafinedust.setFont(new Font("∏º¿∫∞ÌµÒ",Font.BOLD,13));
+		 
+		 radioBtns.add(finedust);
+		 radioBtns.add(ultrafinedust);
 		 
 		 dust.add(finedust);
 		 dust.add(ultrafinedust);
