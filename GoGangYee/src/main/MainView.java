@@ -146,10 +146,9 @@ public class MainView extends JFrame{
 				try {
 					Class.forName("com.mysql.cj.jdbc.Driver");
 					
-					conn=DriverManager.getConnection(url,"root","Pringle!135");
+					conn=DriverManager.getConnection(url,"root","asd970712!@");
 					//연결
 					stmt=conn.createStatement();
-					//String sql="LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/pollution_new.csv' INTO TABLE gogang FIELDS TERMINATED BY ',';";
 					String sql="LOAD DATA INFILE '";
 					sql+=FileNameL.getText();
 					sql+="' INTO TABLE gogang FIELDS TERMINATED BY ','";
@@ -188,7 +187,7 @@ public class MainView extends JFrame{
 				try {
 					Class.forName("com.mysql.cj.jdbc.Driver");
 					
-					conn=DriverManager.getConnection(url,"root","Pringle!135");
+					conn=DriverManager.getConnection(url,"root","asd970712!@");
 					//연결
 					stmt1=conn.createStatement();
 				
@@ -196,7 +195,7 @@ public class MainView extends JFrame{
 					String sql1="select * from gogang " + 
 							"into outfile 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/gogang.csv' " + 
 							"character set utf8 " + 
-							"fields terminated by ';' " + 
+							"fields terminated by ', ' " + 
 							"lines terminated by '\n'";
 					
 					rs1=stmt1.executeQuery(sql1);
