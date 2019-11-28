@@ -8,8 +8,8 @@ import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -76,6 +76,7 @@ public class ModifyDB extends JFrame{
          
          Box ppm = Box.createVerticalBox();
          Box μg = Box.createVerticalBox();
+         ButtonGroup radioBtns=new ButtonGroup();	//물질 중복 선택 방지 위한 라디오 버튼
          JRadioButton ck1 = new JRadioButton("이산화질소");
          JRadioButton ck2 = new JRadioButton("일산화산소");
          JRadioButton ck3 = new JRadioButton("아황산가스");
@@ -83,6 +84,13 @@ public class ModifyDB extends JFrame{
          JRadioButton ck5 = new JRadioButton("미세먼지");
          JRadioButton ck6 = new JRadioButton("초미세먼지");
          JButton apply = new JButton("조회");
+         
+         radioBtns.add(ck1);
+         radioBtns.add(ck2);
+         radioBtns.add(ck3);
+         radioBtns.add(ck4);
+         radioBtns.add(ck5);
+         radioBtns.add(ck6);
          
          ppmPanel.setBorder(new TitledBorder(new EtchedBorder(), " ppm "));
          μgPanel.setBorder(new TitledBorder(new EtchedBorder(), " μg "));

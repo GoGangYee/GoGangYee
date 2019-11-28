@@ -10,13 +10,14 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
@@ -75,13 +76,21 @@ public class MaterialView extends JFrame{
 		JLabel materialChoice = new JLabel("물질 선택");
 		Box ppm = Box.createVerticalBox();
 		Box μg = Box.createVerticalBox();
-        JCheckBox ck1 = new JCheckBox("이산화질소");
-        JCheckBox ck2 = new JCheckBox("일산화산소");
-        JCheckBox ck3 = new JCheckBox("아황산가스");
-        JCheckBox ck4 = new JCheckBox("오존");
-        JCheckBox ck5 = new JCheckBox("미세먼지");
-        JCheckBox ck6 = new JCheckBox("초미세먼지");
+		ButtonGroup radioBtns=new ButtonGroup();	//물질 중복 선택을 방지하기 위한 버튼그룹
+        JRadioButton ck1 = new JRadioButton("이산화질소");
+        JRadioButton ck2 = new JRadioButton("일산화산소");
+        JRadioButton ck3 = new JRadioButton("아황산가스");
+        JRadioButton ck4 = new JRadioButton("오존");
+        JRadioButton ck5 = new JRadioButton("미세먼지");
+        JRadioButton ck6 = new JRadioButton("초미세먼지");
 		
+        radioBtns.add(ck1);
+        radioBtns.add(ck2);
+        radioBtns.add(ck3);
+        radioBtns.add(ck4);
+        radioBtns.add(ck5);
+        radioBtns.add(ck6);
+        
 		localSelect.setPreferredSize(new Dimension(200,25));
 		txt1.setFont(new Font("맑은고딕",Font.PLAIN,30));
 		help.setFont(new Font("맑은고딕",Font.BOLD,13));
