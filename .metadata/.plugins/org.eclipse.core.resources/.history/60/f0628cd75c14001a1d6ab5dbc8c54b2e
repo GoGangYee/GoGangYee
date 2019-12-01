@@ -9,15 +9,14 @@ import java.sql.Statement;
 // MySql DB 연동되는 클래스와 메소드
 public class DBconnect {
 
-	Connection conn = null;
-	String schema = "gogang";
-	String table = "gogang";
-	String url = "jdbc:mysql://localhost/"+schema+"?characterEncoding=UTF-8&serverTimezone=UTC";
-	String user = "root";
-	String password = "asd970712!@";
-	
 	// MySql DB 연동 메소드
 	public Connection getConnection() {
+
+		Connection conn = null;
+		String url = "jdbc:mysql://localhost/airpollutiondb?characterEncoding=UTF-8&serverTimezone=UTC";
+		String user = "root";
+		String password = "asd970712!@";
+
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection(url, user, password);
