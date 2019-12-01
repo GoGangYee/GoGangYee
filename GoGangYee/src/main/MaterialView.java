@@ -179,11 +179,13 @@ public class MaterialView extends JFrame{
 	      if(material.equals("no2")==true||material.equals("o3")==true||material.equals("so2")==true)
 	      {
 	    	  System.out.println("ewel");
-	    	  LineGraph graph=new LineGraph(data1,1000,50);
+	    	  LineGraph graph=new LineGraph(data1,2000,50);
 	    	  graph.setPreferredSize(new Dimension(750,170));
 		      p1.add(graph);
 		      add(p1, BorderLayout.CENTER);
 	      }
+	      p1.revalidate();
+	      p1.repaint();
 	      k=0;
 	      //graph.setBorder(BorderFactory.createEmptyBorder(0,50,0,50));	      	      
 	   }
