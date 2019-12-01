@@ -207,7 +207,7 @@ public class MainView extends JFrame{
 			Connection conn=null;
 			Statement stmt=null;
 			ResultSet rs=null;
-			String url="jdbc:mysql://localhost/airpollution?characterEncoding=UTF-8&serverTimezone=UTC";
+			String url="jdbc:mysql://localhost/airpollution?characterEncoding=UTF-8&serverTimezone=UTC&amp;autoReconnection=true";
 			
 			try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
