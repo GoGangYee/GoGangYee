@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;main.Material&apos; to &apos;MaterialView&apos;&#x0D;&#x0A;- Original project: &apos;GoGangYee&apos;&#x0D;&#x0A;- Original element: &apos;main.Material&apos;&#x0D;&#x0A;- Renamed element: &apos;main.MaterialView&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Material&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;main{Material.java[Material" matchStrategy="1" name="MaterialView" qualified="false" references="true" similarDeclarations="false" stamp="1573661117819" textual="false" version="1.0"/>
+</session>

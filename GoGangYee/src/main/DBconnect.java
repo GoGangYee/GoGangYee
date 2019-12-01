@@ -15,7 +15,7 @@ public class DBconnect {
 		Connection conn = null;
 		String url = "jdbc:mysql://localhost/airpollutiondb?characterEncoding=UTF-8&serverTimezone=UTC";
 		String user = "root";
-		String password = "1569";
+		String password = "ss";
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
