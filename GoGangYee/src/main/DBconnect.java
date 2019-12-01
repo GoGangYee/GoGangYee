@@ -10,11 +10,11 @@ import java.sql.Statement;
 public class DBconnect {
 
 	Connection conn = null;
-	String schema = "gogang";
-	String table = "gogang";
+	String schema = "airpollution";
+	String table = "airpollutiondb";
 	String url = "jdbc:mysql://localhost/"+schema+"?characterEncoding=UTF-8&serverTimezone=UTC";
 	String user = "root";
-	String password = "asd970712!@";
+	String password = "1569";
 	
 	// MySql DB 연동 메소드
 	public Connection getConnection() {
