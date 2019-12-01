@@ -3,7 +3,7 @@
 # Edit at https://www.gitignore.io/?templates=git,java,windows,eclipse
 
 ### Eclipse ###
-.metadata
+.metadata/
 bin/
 tmp/
 *.tmp
@@ -14,10 +14,7 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-GoGangYee/src/main/
-
-# External tool builders
-.externalToolBuilders/DBconnect.java
+GoGangYee/src/main/DBconnect.java
 
 # Locally stored "Eclipse launch configurations"
 *.launch
