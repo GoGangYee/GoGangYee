@@ -117,19 +117,14 @@ public class MainView extends JFrame{
 	
 		addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e) {
-				Connection conn=null;
-				Statement stmt1=null;
 				ResultSet rs1=null;
 				int rs=0;
-	
-				try {
-					DBconnect dbUtil = new DBconnect();
-					conn = dbUtil.getConnection();
-					//연결
-					stmt1=conn.createStatement();
+				Connection conn = DBconnect.getConnection();
 				
-					String sql="delete from " + dbUtil.table;
-					String sql1="select * from " + dbUtil.table + " " +
+				try {
+					Statement stmt1=conn.createStatement();
+					String sql="delete from " + DBconnect.table;
+					String sql1="select * from " + DBconnect.table + " " +
 							"into outfile 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/pollution_new.csv' " + 
 							"character set utf8 " + 
 							"fields terminated by ', ' " + 
@@ -137,10 +132,10 @@ public class MainView extends JFrame{
 					
 					rs1=stmt1.executeQuery(sql1);
 					rs=stmt1.executeUpdate(sql);
-				}
-				catch(SQLException e1) {
+					DBconnect.close();
+				} catch(SQLException e1) {
 					System.out.println(e1);
-					DBconnect.close(conn, stmt1);
+					DBconnect.close();
 				}
 			}		
 		});
@@ -172,24 +167,22 @@ public class MainView extends JFrame{
 
 	class CommitActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			Connection conn=null;
+			Connection conn = DBconnect.getConnection();
 			Statement stmt=null;
 			ResultSet rs=null;
 			
 			try {
-				DBconnect dbUtil = new DBconnect();
-				conn = dbUtil.getConnection();
-				//연결
 				stmt=conn.createStatement();
 				String sql="LOAD DATA INFILE '";
 				sql+=FileNameL.getText();
-				sql+="' INTO TABLE " + dbUtil.table + " FIELDS TERMINATED BY ','";
+				sql+="' INTO TABLE " + DBconnect.table + " FIELDS TERMINATED BY ','";
 				sql=sql.replace("\\","/");
 				System.out.println(sql);
 				rs=stmt.executeQuery(sql);
 			} catch (Exception e1) {
 				System.out.println(e1);
-				DBconnect.close(conn, stmt);
+			} finally {
+				DBconnect.close(stmt);
 			}
 		}
 	}
