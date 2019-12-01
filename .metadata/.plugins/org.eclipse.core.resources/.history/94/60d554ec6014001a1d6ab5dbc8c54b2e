@@ -198,9 +198,9 @@ public class MainView extends JFrame{
 				conn = dbUtil.getConnection();
 				//¿¬°á
 				stmt=conn.createStatement();
-				String sql="LOAD DATA INFILE '";
+				String sql="LOAD DATA LOCAL INFILE '";
 				sql+=FileNameL.getText();
-				sql+="' INTO TABLE " + dbUtil.table + " FIELDS TERMINATED BY ','";
+				sql+="' INTO TABLE "+dbUtil.table+" FIELDS TERMINATED BY ','";
 				sql=sql.replace("\\","/");
 				System.out.println(sql);
 				rs=stmt.executeQuery(sql);

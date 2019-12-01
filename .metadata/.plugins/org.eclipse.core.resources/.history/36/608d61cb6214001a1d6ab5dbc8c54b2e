@@ -200,7 +200,7 @@ public class MainView extends JFrame{
 				stmt=conn.createStatement();
 				String sql="LOAD DATA INFILE '";
 				sql+=FileNameL.getText();
-				sql+="' INTO TABLE " + dbUtil.table + " FIELDS TERMINATED BY ','";
+				sql+="' INTO TABLE "+dbUtil.table+" FIELDS TERMINATED BY ','";
 				sql=sql.replace("\\","/");
 				System.out.println(sql);
 				rs=stmt.executeQuery(sql);

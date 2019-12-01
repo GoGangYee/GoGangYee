@@ -121,15 +121,17 @@ public class MainView extends JFrame{
 				Statement stmt1=null;
 				ResultSet rs1=null;
 				int rs=0;
-	
+				String url="jdbc:mysql://localhost/airpollutiondb?characterEncoding=UTF-8&serverTimezone=UTC";
+				
 				try {
-					DBconnect dbUtil = new DBconnect();
-					conn = dbUtil.getConnection();
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					
+					conn=DriverManager.getConnection(url,"root","1569");
 					//연결
 					stmt1=conn.createStatement();
 				
-					String sql="delete from " + dbUtil.table;
-					String sql1="select * from " + dbUtil.table + " " +
+					String sql="delete from airpollutiondb";
+					String sql1="select * from airpollutiondb " + 
 							"into outfile 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/pollution_new.csv' " + 
 							"character set utf8 " + 
 							"fields terminated by ', ' " + 
@@ -138,9 +140,22 @@ public class MainView extends JFrame{
 					rs1=stmt1.executeQuery(sql1);
 					rs=stmt1.executeUpdate(sql);
 				}
+				catch(ClassNotFoundException e1) {
+					System.out.println("드라이버 로딩 실패");
+				}
 				catch(SQLException e1) {
-					System.out.println(e1);
-					DBconnect.close(conn, stmt1);
+					System.out.println("에러: "+e1);
+				}
+				finally {
+					try {
+						if(conn !=null && !conn.isClosed()) {
+							conn.close();
+						}
+					}
+				
+				catch(SQLException e1) {
+					e1.printStackTrace();
+				}
 				}
 			}		
 		});
@@ -192,22 +207,46 @@ public class MainView extends JFrame{
 			Connection conn=null;
 			Statement stmt=null;
 			ResultSet rs=null;
+			String url="jdbc:mysql://localhost/airpollution?characterEncoding=UTF-8&serverTimezone=UTC&amp;autoReconnection=true";
 			
 			try {
-				DBconnect dbUtil = new DBconnect();
-				conn = dbUtil.getConnection();
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				
+				conn=DriverManager.getConnection(url,"root","1569");
 				//연결
 				stmt=conn.createStatement();
 				String sql="LOAD DATA INFILE '";
 				sql+=FileNameL.getText();
-				sql+="' INTO TABLE " + dbUtil.table + " FIELDS TERMINATED BY ','";
+				sql+="' INTO TABLE airpollutiondb FIELDS TERMINATED BY ','";
 				sql=sql.replace("\\","/");
 				System.out.println(sql);
 				rs=stmt.executeQuery(sql);
-			} catch (Exception e1) {
+			}
+			catch(ClassNotFoundException e1) {
+				System.out.println("드라이버 로딩 실패");
 				System.out.println(e1);
-				DBconnect.close(conn, stmt);
+			}
+			catch(SQLException e1) {
+				System.out.println("에러: "+e1);
+			}
+			finally {
+				try {
+					if(conn !=null && !conn.isClosed()) {
+						conn.close();
+					}
+				}
+			
+			catch(SQLException e1) {
+				e1.printStackTrace();
+			}
 			}
 		}
 	}
+<<<<<<< HEAD
 }
+
+=======
+
+
+}
+>>>>>>> 2ba0e49ab7aa0cb0317e0be657008b6657bd4513
