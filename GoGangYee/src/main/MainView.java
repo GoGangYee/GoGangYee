@@ -175,10 +175,6 @@ public class MainView extends JFrame{
 			Connection conn=null;
 			Statement stmt=null;
 			ResultSet rs=null;
-<<<<<<< HEAD
-			String url="jdbc:mysql://localhost/airpollution?characterEncoding=UTF-8&serverTimezone=UTC";
-=======
->>>>>>> 401219bd98e22877dc41c7ab2aba34cca6ad24c6
 			
 			try {
 				DBconnect dbUtil = new DBconnect();
