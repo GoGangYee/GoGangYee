@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,6 +26,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import main.WindowCloseAction;
 
 public class MainView extends JFrame{
 	JPanel p=new JPanel();
@@ -41,9 +43,9 @@ public class MainView extends JFrame{
 	JButton local=new JButton("지역별 비교");
 	JButton date=new JButton("날짜별 비교");
 	JButton MandD=new JButton("수정 및 삭제");
-	JButton help=new JButton("?");
+	JButton MainHelp=new JButton("?");
 	
-	MainView(){
+	public MainView(){
 		setTitle("고갱이");
 		EtchedBorder eborder;
 		
@@ -57,7 +59,7 @@ public class MainView extends JFrame{
 		local.setFont(new Font("맑은고딕",Font.BOLD,20));
 		date.setFont(new Font("맑은고딕",Font.BOLD,20));
 		MandD.setFont(new Font("맑은고딕",Font.BOLD,20));
-		help.setFont(new Font("맑은고딕",Font.BOLD,13));
+		MainHelp.setFont(new Font("맑은고딕",Font.BOLD,13));
 		p3.setBorder(BorderFactory.createEmptyBorder(20,0,0,0));
 		p2.setBorder(BorderFactory.createEmptyBorder(0,100,50,100));
 		p4.setBorder(BorderFactory.createEmptyBorder(0,730,0,0));
@@ -72,7 +74,7 @@ public class MainView extends JFrame{
 		p2.add(MandD);
 		p3.add(p);
 		p3.add(p1);
-		p4.add(help);
+		p4.add(MainHelp);
 		
 		super.setLayout(new BorderLayout(3,0));
 		
@@ -100,23 +102,10 @@ public class MainView extends JFrame{
 			}
 		});
 		
-		help.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "1. 에너지 절약를 절약합니다\r\n\n" + 
-						"2. 대중교통을 이용합니다\r\n\n" + 
-						"3. 폐기물 분리 배출\r\n\n" + 
-						"4. 가까운 곳은 걷거나 자전거를 탑니다\r\n\n" + 
-						"5 .급출발,급제동,공회전을 삼갑니다\r\n\n" + 
-						"6. 매연차량은 120에 신고합니다\r\n\n" + 
-						"7. 나 홀로 운행을 자제합니다\r\n\n" + 
-						"8. 경유승용차 구매를 자제합니다\r\n\n" + 
-						"9. 공기정화식물을 키웁니다\r\n\n" + 
-						"10. 요리 시 직화 구이를 삼갑니다\r\n\n"   
-						,"공기정화운동법",JOptionPane.WARNING_MESSAGE);
-			}
-		});
-		
+
 		search.addActionListener(new OpenActionListener());
+		MainHelp.addActionListener(new MainHelpActionListener());
+		commit.addActionListener(new CommitActionListener());
 		
 		getContentPane().add(p3,"North");
 		getContentPane().add(p2,"Center");
@@ -125,65 +114,25 @@ public class MainView extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(800,500);
 		setVisible(true);
-		
-		commit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Connection conn=null;
-				Statement stmt=null;
-				ResultSet rs=null;
-				String url="jdbc:mysql://localhost/gogang?characterEncoding=UTF-8&serverTimezone=UTC";
-				
-				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-					
-					conn=DriverManager.getConnection(url,"root","asd970712!@");
-					//연결
-					stmt=conn.createStatement();
-					String sql="LOAD DATA INFILE '";
-					sql+=FileNameL.getText();
-					sql+="' INTO TABLE gogang FIELDS TERMINATED BY ','";
-					sql=sql.replace("\\","/");
-					System.out.println(sql);
-					rs=stmt.executeQuery(sql);
-				}
-				catch(ClassNotFoundException e1) {
-					System.out.println("드라이버 로딩 실패");
-				}
-				catch(SQLException e1) {
-					System.out.println("에러: "+e1);
-				}
-				finally {
-					try {
-						if(conn !=null && !conn.isClosed()) {
-							conn.close();
-						}
-					}
-				
-				catch(SQLException e1) {
-					e1.printStackTrace();
-				}
-				}
-			}
-		});
-		
+	
 		addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e) {
 				Connection conn=null;
 				Statement stmt1=null;
 				ResultSet rs1=null;
 				int rs=0;
-				String url="jdbc:mysql://localhost/gogang?characterEncoding=UTF-8&serverTimezone=UTC";
+				String url="jdbc:mysql://localhost/airpollutiondb?characterEncoding=UTF-8&serverTimezone=UTC";
 				
 				try {
 					Class.forName("com.mysql.cj.jdbc.Driver");
 					
-					conn=DriverManager.getConnection(url,"root","asd970712!@");
+					conn=DriverManager.getConnection(url,"root","1569");
 					//연결
 					stmt1=conn.createStatement();
 				
-					String sql="delete from gogang";
-					String sql1="select * from gogang " + 
-							"into outfile 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/gogang.csv' " + 
+					String sql="delete from airpollutiondb";
+					String sql1="select * from airpollutiondb " + 
+							"into outfile 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/pollution_new.csv' " + 
 							"character set utf8 " + 
 							"fields terminated by ', ' " + 
 							"lines terminated by '\n'";
@@ -212,6 +161,8 @@ public class MainView extends JFrame{
 		});
 	}
 	
+	
+	
 	class OpenActionListener implements ActionListener {
 		JFileChooser chooser;
 		
@@ -233,8 +184,69 @@ public class MainView extends JFrame{
 		}
 	}
 	
-	public static void main(String[] args) {
-		new MainView();
+	class MainHelpActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			JOptionPane.showMessageDialog(null, 
+					"1. 에너지 절약를 절약합니다\r\n\n" + 
+					"2. 대중교통을 이용합니다\r\n\n" + 
+					"3. 폐기물 분리 배출\r\n\n" + 
+					"4. 가까운 곳은 걷거나 자전거를 탑니다\r\n\n" + 
+					"5 .급출발,급제동,공회전을 삼갑니다\r\n\n" + 
+					"6. 매연차량은 120에 신고합니다\r\n\n" + 
+					"7. 나 홀로 운행을 자제합니다\r\n\n" + 
+					"8. 경유승용차 구매를 자제합니다\r\n\n" + 
+					"9. 공기정화식물을 키웁니다\r\n\n" + 
+					"10. 요리 시 직화 구이를 삼갑니다\r\n\n"   
+					,"공기정화운동법",JOptionPane.WARNING_MESSAGE);
+		}
+	
 	}
+	
+	class CommitActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			Connection conn=null;
+			Statement stmt=null;
+			ResultSet rs=null;
+			String url="jdbc:mysql://localhost/airpollution?characterEncoding=UTF-8&serverTimezone=UTC&amp;autoReconnection=true";
+			
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				
+				conn=DriverManager.getConnection(url,"root","1569");
+				//연결
+				stmt=conn.createStatement();
+				String sql="LOAD DATA INFILE '";
+				sql+=FileNameL.getText();
+				sql+="' INTO TABLE airpollutiondb FIELDS TERMINATED BY ','";
+				sql=sql.replace("\\","/");
+				System.out.println(sql);
+				rs=stmt.executeQuery(sql);
+			}
+			catch(ClassNotFoundException e1) {
+				System.out.println("드라이버 로딩 실패");
+				System.out.println(e1);
+			}
+			catch(SQLException e1) {
+				System.out.println("에러: "+e1);
+			}
+			finally {
+				try {
+					if(conn !=null && !conn.isClosed()) {
+						conn.close();
+					}
+				}
+			
+			catch(SQLException e1) {
+				e1.printStackTrace();
+			}
+			}
+		}
+	}
+<<<<<<< HEAD
 }
 
+=======
+
+
+}
+>>>>>>> 2ba0e49ab7aa0cb0317e0be657008b6657bd4513

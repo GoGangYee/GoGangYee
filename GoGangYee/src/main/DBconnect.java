@@ -13,7 +13,7 @@ public class DBconnect {
 	public Connection getConnection() {
 
 		Connection conn = null;
-		String url = "jdbc:mysql://localhost/gogang?characterEncoding=UTF-8&serverTimezone=UTC";
+		String url = "jdbc:mysql://localhost/airpollutiondb?characterEncoding=UTF-8&serverTimezone=UTC";
 		String user = "root";
 		String password = "asd970712!@";
 
