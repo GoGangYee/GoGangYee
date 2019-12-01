@@ -102,27 +102,17 @@ public class MainView extends JFrame{
 		
 		help.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "이산화질소\r\n" + 
-						" * 코와 인후자극\r\n" + 
-						" * 호흡기에 나쁜 영향\r\n" + 
-						"\r\n" + 
-						"오존\r\n" + 
-						" * 눈 자극, 농작물 피해\r\n" + 
-						"\r\n" + 
-						"일산화탄소\r\n" + 
-						" * 산소공급 저조, 두통, 현기증 유발\r\n" + 
-						"\r\n" + 
-						"아황산가스\r\n" + 
-						" * 인체호흡기 질환\r\n" + 
-						" * 식물의 성장 방해\r\n" + 
-						"\r\n" + 
-						"미세먼지\r\n" + 
-						" * 아황산가스와 결합하여 호흡기질환 유발\r\n" + 
-						"\r\n" + 
-						"초미세먼지\r\n" + 
-						" * 아황산가스와 결합하여 호흡기질환 유발\r\n" + 
-						"\r\n" + 
-						"출처 - 수원시청","물질별 설명",JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(null, "1. 에너지 절약를 절약합니다\r\n\n" + 
+						"2. 대중교통을 이용합니다\r\n\n" + 
+						"3. 폐기물 분리 배출\r\n\n" + 
+						"4. 가까운 곳은 걷거나 자전거를 탑니다\r\n\n" + 
+						"5 .급출발,급제동,공회전을 삼갑니다\r\n\n" + 
+						"6. 매연차량은 120에 신고합니다\r\n\n" + 
+						"7. 나 홀로 운행을 자제합니다\r\n\n" + 
+						"8. 경유승용차 구매를 자제합니다\r\n\n" + 
+						"9. 공기정화식물을 키웁니다\r\n\n" + 
+						"10. 요리 시 직화 구이를 삼갑니다\r\n\n"   
+						,"공기정화운동법",JOptionPane.WARNING_MESSAGE);
 			}
 		});
 		

@@ -1,12 +1,19 @@
 package main;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -19,17 +26,35 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 public class MaterialView extends JFrame{
-
+	String[] region = {"강남구","강남대로","강동구","강변북로","강북구","강서구","공항대로","관악구","관악산","광진구","구로구","궁동","금천구","남산","노원구","도봉구","도산대로","동대문구","동작구","도산대로","동대문구","동작구","동작대로","마포구","북한산","서대문구","서초구","성동구","성북구","세곡","송파구","시흥대로","신촌로","양천구","영등포구","영등포로","용산구","은평구","정릉로","종로","종로구","중구","중랑구","천호대로","청계천로","한강대로","행주","홍릉로","화랑로"};
+	JComboBox<String> localSelect = new JComboBox<>(region);
+	JButton apply = new JButton("적용");
+	JTextField monthTF1 = new JTextField(2);
+	JTextField monthTF2 = new JTextField(2);
+	JTextField dayTF1 = new JTextField(2);
+	JTextField dayTF2 = new JTextField(2);
+	JRadioButton ck1 = new JRadioButton("이산화질소");
+    JRadioButton ck2 = new JRadioButton("일산화산소");
+    JRadioButton ck3 = new JRadioButton("아황산가스");
+    JRadioButton ck4 = new JRadioButton("오존");
+    JRadioButton ck5 = new JRadioButton("미세먼지");
+    JRadioButton ck6 = new JRadioButton("초미세먼지");
+	double[] data1= new double[365];
+	int k=0;
+	String material="";
+	JPanel p1 = new JPanel();		
+	
 	public MaterialView() {
 		setTitle("고갱이");
 		
 		setLayout(new BorderLayout(10, 10));
 		showNorth();
-		showCenter();
+		//showCenter();
 		showSouth();
 		
 		setSize(800, 500);
@@ -37,7 +62,6 @@ public class MaterialView extends JFrame{
 	}
 	
 	public void showNorth() {
-		String[] region = {"강남구","강남대로","강동구","강변북로","강북구","강서구","공항대로","관악구","관악산","광진구","구로구","궁동","금천구","남산","노원구","도봉구","도산대로","동대문구","동작구","도산대로","동대문구","동작구","동작대로","마포구","북한산","서대문구","서초구","성동구","성북구","세곡","송파구","시흥대로","신촌로","양천구","영등포구","영등포로","용산구","은평구","정릉로","종로","종로구","중구","중랑구","천호대로","청계천로","한강대로","행주","홍릉로","화랑로"};
 		JPanel p1 = new JPanel(new BorderLayout());	// 지역, 날짜선택 영역
 		JPanel p1_0 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel p1_1 = new JPanel(new FlowLayout(FlowLayout.LEFT)); // 지역선택
@@ -56,13 +80,7 @@ public class MaterialView extends JFrame{
 		JPanel p2_3 = new JPanel(new GridLayout(1,2));
 		JPanel panel = new JPanel(new GridLayout(1,2));	// 전체패널
 		
-		JTextField monthTF1 = new JTextField(2);
-		JTextField monthTF2 = new JTextField(2);
-		JTextField dayTF1 = new JTextField(2);
-		JTextField dayTF2 = new JTextField(2);
-		JComboBox<String> localSelect = new JComboBox<>(region);
-		JButton help = new JButton("?");
-		JButton apply = new JButton("적용");
+		JButton help = new JButton("?");	
 		JLabel txt1 = new JLabel("물질별 비교");
 		JLabel txt2 = new JLabel("지역 선택");
 		JLabel txt3 = new JLabel("날짜 선택");
@@ -77,12 +95,6 @@ public class MaterialView extends JFrame{
 		Box ppm = Box.createVerticalBox();
 		Box μg = Box.createVerticalBox();
 		ButtonGroup radioBtns=new ButtonGroup();	//물질 중복 선택을 방지하기 위한 버튼그룹
-        JRadioButton ck1 = new JRadioButton("이산화질소");
-        JRadioButton ck2 = new JRadioButton("일산화산소");
-        JRadioButton ck3 = new JRadioButton("아황산가스");
-        JRadioButton ck4 = new JRadioButton("오존");
-        JRadioButton ck5 = new JRadioButton("미세먼지");
-        JRadioButton ck6 = new JRadioButton("초미세먼지");
 		
         radioBtns.add(ck1);
         radioBtns.add(ck2);
@@ -147,15 +159,34 @@ public class MaterialView extends JFrame{
 		panel.add(p2);	// 물질선택 칸
 		
 		add(panel, BorderLayout.NORTH);
-	}
+}
 	
-	public void showCenter() {
-		JPanel p1 = new JPanel();
-		JLabel table = new JLabel("표입니다");
-		p1.add(table);
-		
-		add(table, BorderLayout.CENTER);
-	}
+	public void showCenter() {	  	      
+	      if(material.equals("microdust")==true || material.equals("ultrafinemicrodust")==true) {
+	    	  System.out.println("ewew");
+	    	  LineGraph graph=new LineGraph(data1,1,50);  
+	    	  graph.setPreferredSize(new Dimension(750,170));
+		      p1.add(graph);
+		      add(p1, BorderLayout.CENTER);
+		      repaint();
+	      }
+	      if(material.equals("co2")) {
+	    	  LineGraph graph=new LineGraph(data1,100,50);  
+	    	  graph.setPreferredSize(new Dimension(750,170));
+		      p1.add(graph);
+		      add(p1, BorderLayout.CENTER);
+	      }
+	      if(material.equals("no2")==true||material.equals("o3")==true||material.equals("so2")==true)
+	      {
+	    	  System.out.println("ewel");
+	    	  LineGraph graph=new LineGraph(data1,1000,50);
+	    	  graph.setPreferredSize(new Dimension(750,170));
+		      p1.add(graph);
+		      add(p1, BorderLayout.CENTER);
+	      }
+	      k=0;
+	      //graph.setBorder(BorderFactory.createEmptyBorder(0,50,0,50));	      	      
+	   }
 	
 	public void showSouth() {
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -192,5 +223,144 @@ public class MaterialView extends JFrame{
 		});
 		
 		add(panel, BorderLayout.SOUTH);
+		
+		 apply.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+	   				Connection conn=null;
+	   				Statement stmt=null;
+	   				ResultSet rs=null;
+
+	   				String value="";
+	   				String url="jdbc:mysql://localhost/gogang?characterEncoding=UTF-8&serverTimezone=UTC";
+	   				
+	   				if(ck1.isSelected())
+	    				{
+	    					material="no2";
+	    				}
+	    				if(ck2.isSelected())
+	    				{
+	    					material="o3";
+	    				}
+	    				if(ck3.isSelected())
+	    				{
+	    					material="co2";
+	    				}
+	    				if(ck4.isSelected())
+	    				{
+	    					material="so2";
+	    				}
+	    				if(ck5.isSelected())
+	    				{
+	    					material="microdust";
+	    				}
+	    				if(ck6.isSelected())
+	    				{
+	    					material="ultrafinemicrodust";
+	    				}
+	   				
+	   				try {
+	   					Class.forName("com.mysql.cj.jdbc.Driver");
+	   					
+	   					conn=DriverManager.getConnection(url,"root","Pringle!135");
+	   					//연결
+	   					stmt=conn.createStatement();
+	   					
+	   					String sql="select "+material+" from gogang"+" where date>='2018"+monthTF1.getText()+dayTF1.getText()
+	   					+"'"+" and date<='2018"+monthTF2.getText()+dayTF2.getText()+"'"+" and local='"+localSelect.getSelectedItem().toString()+"'";
+
+	   					System.out.println(sql);
+	   					rs=stmt.executeQuery(sql);	   		
+	   					
+	   					while(rs.next())
+					    {
+	   						String v="";
+					    	v=rs.getString(material)+"\n";
+					    	if(rs.getString(material).equals(""))
+					    	{
+					    		v="0";
+					    	}
+					    	value+=v;
+					    	v="";
+					    }
+	   				}
+	   				catch(ClassNotFoundException e1) {
+	   					System.out.println("드라이버 로딩 실패");
+	   				}
+	   				catch(SQLException e1) {
+	   					System.out.println("에러: "+e1);
+	   				}
+	   				finally {
+	   					try {
+	   						if(conn !=null && !conn.isClosed()) {
+	   							conn.close();
+	   						}
+	   					}
+	   				
+	   				catch(SQLException e1) {
+	   					e1.printStackTrace();
+	   				}
+	   				}
+	   				String[] data=value.split("\n");	   				
+	   				
+	   				for(int i=0;i<data.length;i++)
+	   				{
+	   					data1[i]=Double.parseDouble(data[i]);
+	   					k++;
+	   				}
+	   				for(int i=0;i<data.length;i++)
+	   				{
+	   					System.out.println(data1[i]);
+	   				}		
+	   				p1.removeAll();
+	   				showCenter();	   				
+				}			 
+			 });
+	}
+	
+	class LineGraph extends JPanel{   //꺾은선그래프 그려주는클래스
+	      //사용법 : LineGraph(생성자에 데이터의 값이 담겨 있는 배열, 정수로 만들기 위해 곱해주는 변수, 간격 설정위한 정수)
+	        //setDimension으로 크기 설정 해준다. 그러면 그래프 알아서 출력
+	      int x[];   //x좌표 배열
+	      int y[];   //y좌표 배열
+	      
+	      
+	      LineGraph(double[] data, int multiply, int interval){   //데이터 배열, 곱해줄 수, 간격
+	         int[] x_tmp=new int[k];
+	         int[] y_tmp=new int[k];   //임시
+	         for(int i=0;i<k;i++) {
+	            x_tmp[i]=(i+1)*interval;
+	            y_tmp[i]=(int)(data[i] * multiply);   //곱하기 해주는 상수의 수를 조절해줘야 한다.
+	            //System.out.println(x_tmp[i]+" "+y_tmp[i]);
+	            y_tmp[i]=170-y_tmp[i];   //자바 그래픽은 y좌표가 위에서 부터 시작하므로 300에서 빼준다.
+	         } 
+	         
+	         this.x=x_tmp;
+	         this.y=y_tmp;
+	         System.out.println(k);
+	         for(int i=0;i<k;i++)
+	            System.out.println(x[i]+" "+y[i]);
+	         //this.y=y;
+	         }
+	      
+	      public void paintComponent(Graphics g) {
+	         super.paintComponent(g);
+	         
+	         g.drawLine(30, 10, 30, 150);   //Y축 그리기
+	         g.drawLine(30, 150, 670, 150);   //X축 그리기
+	         
+	         for (int i = 0; i < this.x.length; i++) {   //점찍기
+	               int x = this.x[i];
+	               int y = this.y[i];
+	               int ovalW = 7;
+	               int ovalH = 7;
+	               g.fillOval(x-3, y-3, ovalW, ovalH);
+	            }
+	         
+	         g.setColor(Color.RED);
+	         g.drawPolyline(x,y,this.x.length);   //꺾은선 그래프 출력
+	         
+	         setBackground(Color.WHITE);      
+	         
+	      }
 	}
 }
