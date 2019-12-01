@@ -1,13 +1,17 @@
 package main;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -15,7 +19,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -23,7 +26,11 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 public class LocalView extends JFrame{
+	 String material="";
 	 LocalView(){
+		 String[] r=new String[4];
+		 double[] result=new double[4];
+		 
 		 setTitle("고갱이");	
 		 setLayout(new BorderLayout());
 		 
@@ -33,12 +40,12 @@ public class LocalView extends JFrame{
 		 JLabel name=new JLabel("지  역  별     비  교");
 		 name.setFont(new Font("맑은고딕",Font.BOLD,20));
 		 name.setBorder(BorderFactory.createEmptyBorder(0,90,0,0));
-		 JPanel graph=new JPanel();
-		 graph.setBackground(Color.BLACK);
-		 graph.setPreferredSize(new Dimension(400,300));
+		 //JPanel graph=new JPanel();
+		 //graph.setBackground(Color.BLACK);
+		 //graph.setPreferredSize(new Dimension(400,300));
 
 		 left.add(name,BorderLayout.NORTH);
-		 left.add(graph);
+		 //left.add(graph);
 		 
 		 left.setBorder(BorderFactory.createEmptyBorder(10,10,20,20));
 		 content.add(left);
@@ -136,8 +143,7 @@ public class LocalView extends JFrame{
 		 JButton apply=new JButton("적용");
 		 apply.setFont(new Font("맑은고딕",Font.BOLD,13));
 		 apply.setPreferredSize(new Dimension(80,28));
-
-
+		 
 		 date.setBorder(BorderFactory.createEmptyBorder(20,0,30,0));
 		 date.add(d);
 		 date.add(year);
@@ -146,6 +152,114 @@ public class LocalView extends JFrame{
 		 date.add(day);
 		 date.add(dayLabel);
 		 date.add(apply);
+		 
+		 apply.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+	   				Connection conn=null;
+	   				Statement stmt=null;
+	   				ResultSet rs=null;
+
+	   				String value="";
+	   				String url="jdbc:mysql://localhost/gogang?characterEncoding=UTF-8&serverTimezone=UTC";
+	   				
+	   				if(no2.isSelected())
+	    				{
+	    					material="no2";
+	    				}
+	   				else if(ozone.isSelected())
+	    				{
+	    					material="o3";
+	    				}
+	   				else if(co2.isSelected())
+	    				{
+	    					material="co2";
+	    				}
+	   				else if(so2.isSelected())
+	    				{
+	    					material="so2";
+	    				}
+	   				else if(finedust.isSelected())
+	    				{
+	    					material="microdust";
+	    				}
+	   				else if(ultrafinedust.isSelected())
+	    				{
+	    					material="ultrafinemicrodust";
+	    				}
+	   				
+	   				if(rt1.getText()!=null) {
+	   					r[0]=rt1.getText();
+	   					if(rt2.getText()!=null) {
+	   						r[1]=rt2.getText();
+	   						if(rt3.getText()!=null) {
+	   							r[2]=rt3.getText();
+	   							if(rt4.getText()!=null)
+	   								r[3]=rt4.getText();
+	   						}
+	   					}
+	   				}
+	   				try {
+	   					Class.forName("com.mysql.cj.jdbc.Driver");
+	   					
+	   					conn=DriverManager.getConnection(url,"root","1111");
+	   					//연결
+	   					stmt=conn.createStatement();
+	   					for(int i=0;i<4;i++) {
+	   						if(r[i]!=null) {
+	   							String sql="SELECT "+material+" FROM gogang WHERE date='2018"+month.getText()+day.getText()
+	   		   					+"'"+" AND local='"+r[i]+"';";
+								System.out.println(sql);
+	   							rs=stmt.executeQuery(sql);
+	   							while(rs.next()) {
+	   								String temp;
+	   								temp=rs.getString(1);
+	   								System.out.println("결과 = "+temp);
+	   								result[i]=Double.parseDouble(temp);
+	   							}
+	   						}
+	   					}
+	   					   		
+	   					
+	   					
+	   				}
+	   				catch(ClassNotFoundException e1) {
+	   					System.out.println("드라이버 로딩 실패");
+	   				}
+	   				catch(SQLException e1) {
+	   					System.out.println("에러: "+e1);
+	   				}
+	   				finally {
+	   					try {
+	   						if(conn !=null && !conn.isClosed()) {
+	   							conn.close();
+	   						}
+	   					}
+	   				
+	   				catch(SQLException e1) {
+	   					e1.printStackTrace();
+	   				}
+	   				}
+	   				if(material.equals("co2")) {
+	   					BarGraph graph=new BarGraph(result,r,50,20,200);
+	   					graph.setPreferredSize(new Dimension(400,300));
+	   					left.add(graph);
+	   				}
+	   				else if(material.equals("o3")||material.equals("no2")||material.equals("so2")) {
+	   					BarGraph graph=new BarGraph(result,r,50,20,2000);
+	   					graph.setPreferredSize(new Dimension(400,300));
+	   					left.add(graph);
+	   				}
+	   				else if(material.equals("microdust")||material.equals("ultrafinemicrodust")) {
+	   					BarGraph graph=new BarGraph(result,r,50,20,1);
+	   					graph.setPreferredSize(new Dimension(400,300));
+	   					left.add(graph);
+	   				}
+	   				
+	   				left.revalidate();
+	   				left.repaint();
+				}			 
+				
+			 });
 		 
 		 right.add(date,BorderLayout.SOUTH);
 		 content.add(right);
