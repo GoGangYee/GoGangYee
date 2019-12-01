@@ -14,9 +14,10 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+GoGangYee/src/main/
 
 # External tool builders
-.externalToolBuilders/
+.externalToolBuilders/DBconnect.java
 
 # Locally stored "Eclipse launch configurations"
 *.launch
