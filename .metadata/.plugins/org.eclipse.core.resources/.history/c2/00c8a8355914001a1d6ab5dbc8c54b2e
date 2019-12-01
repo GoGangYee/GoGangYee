@@ -237,4 +237,3 @@ public class MainView extends JFrame{
 		new MainView();
 	}
 }
-
