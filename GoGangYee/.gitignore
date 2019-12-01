@@ -21,7 +21,7 @@
 *.class
 
 #config
-./src/main/DBconnect.java
+src/main/DBconnect.java
 
 # Log file
 *.log

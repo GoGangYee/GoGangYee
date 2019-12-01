@@ -15,7 +15,7 @@ public class DBconnect {
 		Connection conn = null;
 		String url = "jdbc:mysql://localhost/gogang?characterEncoding=UTF-8&serverTimezone=UTC";
 		String user = "root";
-		String password = "ssss";
+		String password = "asd970712!@";
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
