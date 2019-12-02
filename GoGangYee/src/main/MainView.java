@@ -117,21 +117,32 @@ public class MainView extends JFrame{
 	
 		addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e) {
-				ResultSet rs1=null;
-				int rs=0;
 				Connection conn = DBconnect.getConnection();
+				ResultSet rs1=null;
+	            int rs2=0;
+	            int rs3=0;
+	            int rs=0;
 				
 				try {
 					Statement stmt1=conn.createStatement();
-					String sql="delete from " + DBconnect.table;
-					String sql1="select * from " + DBconnect.table + " " +
-							"into outfile 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/pollution_new.csv' " + 
-							"character set utf8 " + 
-							"fields terminated by ', ' " + 
-							"lines terminated by '\n'";
-					
-					rs1=stmt1.executeQuery(sql1);
-					rs=stmt1.executeUpdate(sql);
+		            
+		               String sql="delete from " + DBconnect.table;
+		               String sql1="select * from " + DBconnect.table +
+		                     " into outfile 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/gogang.csv' " + 
+		                     "character set utf8 " + 
+		                     "fields terminated by ', ' " + 
+		                     "lines terminated by '\n'";
+		               String sql2="drop database "+DBconnect.schema;
+		               String sql3="use "+DBconnect.table;
+		               
+		               System.out.println(sql1);
+		               System.out.println(sql);
+		               System.out.println(sql2);
+		               
+		               rs3=stmt1.executeUpdate(sql3);
+		               rs1=stmt1.executeQuery(sql1);
+		               rs=stmt1.executeUpdate(sql);
+		               rs2=stmt1.executeUpdate(sql2);
 					DBconnect.close();
 				} catch(SQLException e1) {
 					System.out.println(e1);
@@ -169,16 +180,32 @@ public class MainView extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			Connection conn = DBconnect.getConnection();
 			Statement stmt=null;
-			ResultSet rs=null;
-			
+			ResultSet rs1=null;
+	         int rs2=0;
+	         int rs3=0;
+	         int rs4=0;
+	         
 			try {
 				stmt=conn.createStatement();
-				String sql="LOAD DATA INFILE '";
-				sql+=FileNameL.getText();
-				sql+="' INTO TABLE " + DBconnect.table + " FIELDS TERMINATED BY ','";
-				sql=sql.replace("\\","/");
-				System.out.println(sql);
-				rs=stmt.executeQuery(sql);
+				String sql1="LOAD DATA INFILE '";
+				sql1+=FileNameL.getText();
+				sql1+="' INTO TABLE " + DBconnect.table + " FIELDS TERMINATED BY ','";
+				sql1=sql1.replace("\\","/");
+				String sql2="create database "+DBconnect.schema;
+	            String sql3="use "+DBconnect.schema;
+	            String sql4="create table "+DBconnect.table+"(date varchar(45) NOT NULL, local varchar(45) NOT NULL, no2 varchar(45), o3 varchar(45)" + 
+	                  ", co2 varchar(45), so2 varchar(45), microdust varchar(45),ultrafinemicrodust varchar(45));";
+	            
+	            
+	            rs2=stmt.executeUpdate(sql2);
+	            System.out.println(sql1);
+	            rs3=stmt.executeUpdate(sql3);
+	            System.out.println(sql2);
+	            rs4=stmt.executeUpdate(sql4);
+	            System.out.println(sql3);
+	            rs1=stmt.executeQuery(sql1);
+	            System.out.println(sql4);
+
 			} catch (Exception e1) {
 				System.out.println(e1);
 			} finally {
