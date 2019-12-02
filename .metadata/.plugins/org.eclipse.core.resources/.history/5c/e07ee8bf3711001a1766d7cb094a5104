@@ -1,0 +1,40 @@
+package main;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+// Mysql DB 연동되는 클래스와 메소드
+public class DBconnenct {
+	
+	// Mysql DB 연동 메소드
+	public Connection getConnection() {
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		String url = "jdbc:mysql://localhost/gogang?characterEncoding=UTF-8&serverTimezone=UTC";
+		String user = "root";
+		String password = "asd970712!@";
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = DriverManager.getConnection(url, user, password);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return conn;
+	}
+	
+	// Mysql DB 종료 메소드
+	public void close(Connection conn, Statement stmt) {
+		if (conn != null) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+}
