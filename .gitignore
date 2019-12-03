@@ -14,7 +14,7 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-#GoGangYee/src/main/DBconnect.java
+GoGangYee/src/main/DBconnect.java
 
 # Locally stored "Eclipse launch configurations"
 *.launch
