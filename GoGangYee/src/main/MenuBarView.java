@@ -46,11 +46,12 @@ public class MenuBarView extends JFrame {
 		infoMenu.add(programInfo);
 		infoMenu.add(supportInfo);
 		
+		FileAct file = new FileAct();
 		InfoAct info = new InfoAct();
 
-		saveMI.addActionListener(new SaveActionListener());
-		loadMI.addActionListener(new OpenActionListener());
-		commitMI.addActionListener(new CommitActionListener());
+		saveMI.addActionListener(file.new SaveActionListener());
+		loadMI.addActionListener(file.new OpenActionListener());
+		commitMI.addActionListener(file.new CommitActionListener());
 		saveAir.addActionListener(new MainHelpActionListener());
 		materialInfo.addActionListener(info.new MetarialInfoActionListener());
 		programInfo.addActionListener(info.new ProgramInfoActionListener());
@@ -65,35 +66,3 @@ public class MenuBarView extends JFrame {
 
 
 
-// 저장하기 액션리스너
-class SaveActionListener implements ActionListener {
-	public void actionPerformed(ActionEvent e) {
-		Connection conn = DBconnect.getConnection();
-		Statement stmt1 = null;
-
-		try {
-			stmt1 = conn.createStatement();
-
-			String sql = "delete from " + DBconnect.table;
-			String sql1 = "select * from " + DBconnect.table
-					+ " into outfile 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/gogang.csv' "
-					+ "character set utf8 " + "fields terminated by ', ' " + "lines terminated by '\n'";
-			String sql2 = "drop database " + DBconnect.schema;
-			String sql3 = "use " + DBconnect.table;
-
-			System.out.println(sql1);
-			System.out.println(sql);
-			System.out.println(sql2);
-
-			stmt1.executeUpdate(sql3);
-			stmt1.executeQuery(sql1);
-			stmt1.executeUpdate(sql);
-			stmt1.executeUpdate(sql2);
-		} catch (SQLException e1) {
-			System.out.println(e1);
-			DBconnect.close(stmt1);
-		} finally {
-			DBconnect.close();
-		}
-	}
-}
