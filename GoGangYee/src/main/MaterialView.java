@@ -55,6 +55,9 @@ public class MaterialView extends JFrame {
 	public MaterialView() {
 		setTitle("고갱이");
 
+		// 메뉴바 추가
+		MenuBarView menuBar = new MenuBarView();
+		setJMenuBar(menuBar.showMenuBar());
 		setLayout(new BorderLayout(10, 10));
 		showNorth();
 		// showCenter();

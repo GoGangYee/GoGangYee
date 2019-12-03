@@ -1,26 +1,9 @@
 package main;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import java.awt.*;
+import java.awt.event.*;
+import java.sql.*;
+import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 
 public class MainView extends JFrame {
@@ -37,7 +20,7 @@ public class MainView extends JFrame {
 	JButton material = new JButton("물질별 비교");
 	JButton local = new JButton("지역별 비교");
 	JButton date = new JButton("날짜별 비교");
-	JButton MandD = new JButton("수정 및 삭제");
+	JButton MandD = new JButton("조회/추가/수정/삭제");
 	JButton MainHelp = new JButton("?");
 
 	public MainView() {
@@ -70,6 +53,9 @@ public class MainView extends JFrame {
 		p3.add(p);
 		p3.add(p1);
 		p4.add(MainHelp);
+		
+		MenuBarView menuBar = new MenuBarView();
+		setJMenuBar(menuBar.showMenuBar());
 
 		super.setLayout(new BorderLayout(3, 0));
 
@@ -141,6 +127,8 @@ public class MainView extends JFrame {
 			}
 		});
 	}
+	
+	
 
 	class OpenActionListener implements ActionListener {
 		JFileChooser chooser;
@@ -171,7 +159,7 @@ public class MainView extends JFrame {
 				Connection conn = DBconnect.getConnection();
 				stmt = conn.createStatement();
 				String sql1 = "LOAD DATA INFILE '" + FileNameL.getText()
-						+ "' INTO TABLE " + DBconnect.table + " FIELDS TERMINATED BY ','";
+						+ "' INTO TABLE " + DBconnect.table + " FIELDS TERMINATED BY ', '";
 				sql1 = sql1.replace("\\", "/");
 				String sql2 = "create database " + DBconnect.schema;
 				String sql3 = "use " + DBconnect.schema;

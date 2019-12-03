@@ -49,7 +49,10 @@ public class DateView extends JFrame {
 		ug[0] = "미세먼지";
 		ug[1] = "초미세먼지";
 
-		// DrawingPanel drawingPanel = new DrawingPanel();
+		// 메뉴바 추가
+		MenuBarView menuBar = new MenuBarView();
+		setJMenuBar(menuBar.showMenuBar());
+		
 		JPanel p = new JPanel(new BorderLayout());
 		JPanel p1 = new JPanel(new FlowLayout());
 		JPanel p2 = new JPanel(new FlowLayout());

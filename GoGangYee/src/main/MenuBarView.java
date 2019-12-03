@@ -1,0 +1,42 @@
+package main;
+
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+
+public class MenuBarView extends JFrame {
+	
+	JMenuBar menuBar = new JMenuBar();
+	JMenu fileMenu = new JMenu("File");
+	JMenuItem saveMI = new JMenuItem("저장하기");
+	JMenuItem loadMI = new JMenuItem("불러오기");
+	JMenu viewMenu = new JMenu("View");
+	JMenuItem backgroundMI = new JMenuItem("배경화면 바꾸기");
+	JMenu helpMenu = new JMenu("Help");
+	JMenuItem saveAir = new JMenuItem("공기정화 동참법");
+	JMenuItem materialInfo = new JMenuItem("물질별 정보");
+	JMenu infoMenu = new JMenu("Info");
+	JMenuItem programInfo = new JMenuItem("프로그램 정보");
+	JMenuItem supportInfo = new JMenuItem("후원하기");
+	JPanel panel = new JPanel();
+	
+	public JMenuBar showMenuBar() {
+		
+		menuBar.add(fileMenu);
+		menuBar.add(viewMenu);
+		menuBar.add(helpMenu);
+		menuBar.add(infoMenu);
+		fileMenu.add(saveMI);
+		fileMenu.add(loadMI);
+		viewMenu.add(backgroundMI);
+		helpMenu.add(saveAir);
+		helpMenu.add(materialInfo);
+		infoMenu.add(programInfo);
+		infoMenu.add(supportInfo);
+		
+		return menuBar;
+		
+	}
+}

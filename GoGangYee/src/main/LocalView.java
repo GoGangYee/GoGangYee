@@ -34,7 +34,11 @@ public class LocalView extends JFrame {
 
 		setTitle("고갱이");
 		setLayout(new BorderLayout());
-
+		
+		// 메뉴바 추가
+		MenuBarView menuBar = new MenuBarView();
+		setJMenuBar(menuBar.showMenuBar());
+		
 		JPanel content = new JPanel(new GridLayout(1, 2));
 		JPanel left = new JPanel(new BorderLayout());
 		JLabel name = new JLabel("지  역  별     비  교");
