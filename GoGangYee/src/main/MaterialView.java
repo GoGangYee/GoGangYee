@@ -42,15 +42,18 @@ public class MaterialView extends JFrame {
 	JTextField dayTF1 = new JTextField(2);
 	JTextField dayTF2 = new JTextField(2);
 	JRadioButton ck1 = new JRadioButton("이산화질소");
-	JRadioButton ck2 = new JRadioButton("일산화산소");
-	JRadioButton ck3 = new JRadioButton("아황산가스");
-	JRadioButton ck4 = new JRadioButton("오존");
+	JRadioButton ck2 = new JRadioButton("오존");
+	JRadioButton ck3 = new JRadioButton("이산화탄소");
+	JRadioButton ck4 = new JRadioButton("아황산가스");
 	JRadioButton ck5 = new JRadioButton("미세먼지");
 	JRadioButton ck6 = new JRadioButton("초미세먼지");
 	double[] data1 = new double[365];
 	int k = 0;
 	String material = "";
 	JPanel p1 = new JPanel();
+	
+	int startDate;	//시작 날짜, 끝 날짜
+	int endDate;
 
 	public MaterialView() {
 		setTitle("고갱이");
@@ -167,21 +170,21 @@ public class MaterialView extends JFrame {
 	public void showCenter() {
 		if (material.equals("microdust") == true || material.equals("ultrafinemicrodust") == true) {
 			System.out.println("ewew");
-			LineGraph graph = new LineGraph(data1, 1, 50);
+			LineGraph graph = new LineGraph(data1, 1, 100);
 			graph.setPreferredSize(new Dimension(750, 170));
 			p1.add(graph);
 			add(p1, BorderLayout.CENTER);
 			repaint();
 		}
 		if (material.equals("co2")) {
-			LineGraph graph = new LineGraph(data1, 100, 50);
+			LineGraph graph = new LineGraph(data1, 100, 100);
 			graph.setPreferredSize(new Dimension(750, 170));
 			p1.add(graph);
 			add(p1, BorderLayout.CENTER);
 		}
 		if (material.equals("no2") == true || material.equals("o3") == true || material.equals("so2") == true) {
 			System.out.println("ewel");
-			LineGraph graph = new LineGraph(data1, 2000, 50);
+			LineGraph graph = new LineGraph(data1, 2000, 100);
 			graph.setPreferredSize(new Dimension(750, 170));
 			p1.add(graph);
 			add(p1, BorderLayout.CENTER);
@@ -230,7 +233,7 @@ public class MaterialView extends JFrame {
 				if (ck6.isSelected()) {
 					material = "ultrafinemicrodust";
 				}
-
+				
 				try {
 					// 연결
 					stmt = conn.createStatement();
@@ -266,6 +269,8 @@ public class MaterialView extends JFrame {
 					System.out.println(data1[i]);
 				}
 				p1.removeAll();
+				startDate=Integer.parseInt(monthTF1.getText()+dayTF1.getText());
+				endDate=Integer.parseInt(monthTF2.getText()+dayTF2.getText());//라벨  설정
 				showCenter();
 			}
 		});
@@ -276,37 +281,76 @@ public class MaterialView extends JFrame {
 		// setDimension으로 크기 설정 해준다. 그러면 그래프 알아서 출력
 		int x[]; // x좌표 배열
 		int y[]; // y좌표 배열
+		double data[];	//데이터
+		String label[];	//X축에 띄워줄 글씨(날짜)
 
 		LineGraph(double[] data, int multiply, int interval) { // 데이터 배열, 곱해줄 수, 간격
+			this.data=data;
 			int[] x_tmp = new int[k];
 			int[] y_tmp = new int[k]; // 임시
+			x_tmp[0]=50;
 			for (int i = 0; i < k; i++) {
-				x_tmp[i] = (i + 1) * interval;
+				if(i==0);
+				else
+					x_tmp[i] = x_tmp[i-1] + interval;
 				y_tmp[i] = (int) (data[i] * multiply); // 곱하기 해주는 상수의 수를 조절해줘야 한다.
 				// System.out.println(x_tmp[i]+" "+y_tmp[i]);
-				y_tmp[i] = 170 - y_tmp[i]; // 자바 그래픽은 y좌표가 위에서 부터 시작하므로 300에서 빼준다.
+				y_tmp[i] = 170 - y_tmp[i] - 30; // 자바 그래픽은 y좌표가 위에서 부터 시작하므로 170에서 빼준다.
 			}
 
 			this.x = x_tmp;
 			this.y = y_tmp;
+			label=new String[endDate - startDate + 1];
+			int tmp=startDate;
+			for(int i=0;i<(endDate-startDate+1);i++) {				
+				if(tmp==132)
+					tmp=201;
+				else if(tmp==229)
+					tmp=301;
+				else if(tmp==332)
+					tmp=401;
+				else if(tmp==431)
+					tmp=501;
+				else if(tmp==532)
+					tmp=601;
+				else if(tmp==631)
+					tmp=701;
+				else if(tmp==732)
+					tmp=801;
+				else if(tmp==832)
+					tmp=901;
+				else if(tmp==931)
+					tmp=1001;
+				else if(tmp==1032)
+					tmp=1101;
+				else if(tmp==1131)
+					tmp=1201;
+				
+				label[i]=String.format("%04d", tmp++);
+			}
+			
 			System.out.println(k);
 			for (int i = 0; i < k; i++)
-				System.out.println(x[i] + " " + y[i]);
+				System.out.println(x[i] + " " + y[i]+" "+this.data[i]);
 			// this.y=y;
 		}
 
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 
-			g.drawLine(30, 10, 30, 150); // Y축 그리기
-			g.drawLine(30, 150, 670, 150); // X축 그리기
-
+			g.drawLine(20, 20, 20, 150); // Y축 그리기
+			g.drawLine(20, 150, 730, 150); // X축 그리기
+			g.drawString("농도", 5, 15);
+			g.drawString("날짜", 710, 165);
+			
 			for (int i = 0; i < this.x.length; i++) { // 점찍기
 				int x = this.x[i];
 				int y = this.y[i];
 				int ovalW = 7;
 				int ovalH = 7;
 				g.fillOval(x - 3, y - 3, ovalW, ovalH);
+				g.drawString(Double.toString(this.data[i]), x-10, y-10);	//데이터 출력
+				g.drawString(label[i], x-15, 165);	//X축 값 출력
 			}
 
 			g.setColor(Color.RED);
