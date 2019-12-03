@@ -21,7 +21,11 @@ public class MenuBarView extends JFrame {
 	JMenuItem loadMI = new JMenuItem("불러오기");
 	JMenuItem commitMI = new JMenuItem("적용하기");
 	JMenu viewMenu = new JMenu("View");
-	JMenuItem backgroundMI = new JMenuItem("배경화면 바꾸기");
+	JMenuItem backgroundMI = new JMenu("배경화면 바꾸기");
+	JMenuItem defaultBG = new JMenuItem("기본");
+	JMenuItem snowBG = new JMenuItem("눈");
+	JMenuItem yellowdustBG = new JMenuItem("황사");
+	JMenuItem nightBG = new JMenuItem("밤");
 	JMenu helpMenu = new JMenu("Help");
 	JMenuItem saveAir = new JMenuItem("공기정화 동참법");
 	JMenuItem materialInfo = new JMenuItem("물질별 정보");
@@ -41,6 +45,10 @@ public class MenuBarView extends JFrame {
 		fileMenu.add(loadMI);
 		fileMenu.add(commitMI);
 		viewMenu.add(backgroundMI);
+		backgroundMI.add(defaultBG);
+		backgroundMI.add(snowBG);
+		backgroundMI.add(yellowdustBG);
+		backgroundMI.add(nightBG);
 		helpMenu.add(saveAir);
 		helpMenu.add(materialInfo);
 		infoMenu.add(programInfo);
