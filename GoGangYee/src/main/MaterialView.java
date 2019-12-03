@@ -58,6 +58,7 @@ public class MaterialView extends JFrame {
 		// 메뉴바 추가
 		MenuBarView menuBar = new MenuBarView();
 		setJMenuBar(menuBar.showMenuBar());
+		
 		setLayout(new BorderLayout(10, 10));
 		showNorth();
 		// showCenter();
@@ -86,7 +87,6 @@ public class MaterialView extends JFrame {
 		JPanel p2_3 = new JPanel(new GridLayout(1, 2));
 		JPanel panel = new JPanel(new GridLayout(1, 2)); // 전체패널
 
-		JButton help = new JButton("?");
 		JLabel txt1 = new JLabel("물질별 비교");
 		JLabel txt2 = new JLabel("지역 선택");
 		JLabel txt3 = new JLabel("날짜 선택");
@@ -111,7 +111,6 @@ public class MaterialView extends JFrame {
 
 		localSelect.setPreferredSize(new Dimension(200, 25));
 		txt1.setFont(new Font("맑은고딕", Font.PLAIN, 30));
-		help.setFont(new Font("맑은고딕", Font.BOLD, 13));
 		p2_1_1.setBorder(new TitledBorder(new EtchedBorder(), " ppm "));
 		p2_2_1.setBorder(new TitledBorder(new EtchedBorder(), " μg "));
 		p2.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 70));
@@ -238,7 +237,7 @@ public class MaterialView extends JFrame {
 					// 연결
 					stmt = conn.createStatement();
 
-					String sql = "select " + material + " from gogang" + " where date>='2018" + monthTF1.getText()
+					String sql = "select " + material + " from "+ DBconnect.table + " where date>='2018" + monthTF1.getText()
 							+ dayTF1.getText() + "'" + " and date<='2018" + monthTF2.getText() + dayTF2.getText() + "'"
 							+ " and local='" + localSelect.getSelectedItem().toString() + "'";
 

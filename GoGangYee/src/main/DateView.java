@@ -41,7 +41,7 @@ public class DateView extends JFrame {
 	double concentration;
 
 	DateView() {
-		setTitle("DateView");
+		setTitle("고갱이");
 		ppm[0] = "이산화질소";
 		ppm[1] = "오존";
 		ppm[2] = "이산화탄소";
@@ -68,12 +68,10 @@ public class DateView extends JFrame {
 		JLabel Today = new JLabel("오늘 고갱이의 기분");
 
 		JButton ApplyB = new JButton("적용");
-		JButton HelpB = new JButton("?");
 		JLabel star = new JLabel("* 이산화탄소는 본 값의 1/10값입니다.");
 
 		LocalChooseC.setPreferredSize(new Dimension(150, 25));
 		label.setFont(new Font("맑은고딕", Font.PLAIN, 30));
-		HelpB.setFont(new Font("맑은고딕", Font.BOLD, 13));
 		p2.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 70));
 		p.setBorder(BorderFactory.createEmptyBorder(10, 20, 0, 0));
 		p4.setBorder(BorderFactory.createEmptyBorder(0, 730, 0, 0));
@@ -94,24 +92,11 @@ public class DateView extends JFrame {
 		p.add(p3, BorderLayout.WEST);
 		// p5.add(Today);
 		p.add(p5, BorderLayout.CENTER);
-		p4.add(HelpB);
 		p6.add(star);
 
 		getContentPane().add(p, "North");
 		getContentPane().add(p6, "Center");
 		getContentPane().add(p4, "South");
-
-		HelpB.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null,
-						"이산화질소\r\n" + " * 코와 인후자극\r\n" + " * 호흡기에 나쁜 영향\r\n" + "\r\n" + "오존\r\n" + " * 눈 자극, 농작물 피해\r\n"
-								+ "\r\n" + "일산화탄소\r\n" + " * 산소공급 저조, 두통, 현기증 유발\r\n" + "\r\n" + "아황산가스\r\n"
-								+ " * 인체호흡기 질환\r\n" + " * 식물의 성장 방해\r\n" + "\r\n" + "미세먼지\r\n"
-								+ " * 아황산가스와 결합하여 호흡기질환 유발\r\n" + "\r\n" + "초미세먼지\r\n" + " * 아황산가스와 결합하여 호흡기질환 유발\r\n"
-								+ "\r\n" + "출처 - 수원시청",
-						"물질별 설명", JOptionPane.WARNING_MESSAGE);
-			}
-		});
 		setSize(800, 500);
 		setVisible(true);
 

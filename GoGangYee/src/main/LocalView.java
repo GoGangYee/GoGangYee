@@ -229,12 +229,7 @@ public class LocalView extends JFrame {
 		add(content, BorderLayout.CENTER);
 
 		JPanel btns = new JPanel(new FlowLayout(FlowLayout.LEFT, 100, 0));
-		JButton help = new JButton("?");
-		help.setFont(new Font("¸¼Àº°íµñ", Font.BOLD, 13));
 		btns.setBorder(BorderFactory.createEmptyBorder(0, 635, 5, 5));
-		btns.add(help);
-		add(btns, BorderLayout.SOUTH);
-		help.addActionListener(new HelpActionListener());
 
 		setSize(800, 500);
 		setVisible(true);

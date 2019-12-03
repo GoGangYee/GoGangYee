@@ -10,10 +10,11 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class MenuBarView extends JFrame {
-	
+
 	JMenuBar menuBar = new JMenuBar();
 	JMenu fileMenu = new JMenu("File");
 	JMenuItem saveMI = new JMenuItem("저장하기");
@@ -28,9 +29,9 @@ public class MenuBarView extends JFrame {
 	JMenuItem programInfo = new JMenuItem("프로그램 정보");
 	JMenuItem supportInfo = new JMenuItem("후원하기");
 	JPanel panel = new JPanel();
-	
+
 	public JMenuBar showMenuBar() {
-		
+
 		menuBar.add(fileMenu);
 		menuBar.add(viewMenu);
 		menuBar.add(helpMenu);
@@ -45,25 +46,33 @@ public class MenuBarView extends JFrame {
 		infoMenu.add(programInfo);
 		infoMenu.add(supportInfo);
 		
+		InfoAct info = new InfoAct();
+
 		saveMI.addActionListener(new SaveActionListener());
 		loadMI.addActionListener(new OpenActionListener());
 		commitMI.addActionListener(new CommitActionListener());
-		return menuBar;
+		saveAir.addActionListener(new MainHelpActionListener());
+		materialInfo.addActionListener(info.new MetarialInfoActionListener());
+		programInfo.addActionListener(info.new ProgramInfoActionListener());
+		infoMenu.addActionListener(info.new SupportInfoActionListener());
 		
+		return menuBar;
 	}
 }
 
+
+
+
+
+
 // 저장하기 액션리스너
 class SaveActionListener implements ActionListener {
-	// 생성자
-	SaveActionListener() {}
-	// 액션
 	public void actionPerformed(ActionEvent e) {
 		Connection conn = DBconnect.getConnection();
 		Statement stmt1 = null;
 
 		try {
-			stmt1 =conn.createStatement();
+			stmt1 = conn.createStatement();
 
 			String sql = "delete from " + DBconnect.table;
 			String sql1 = "select * from " + DBconnect.table

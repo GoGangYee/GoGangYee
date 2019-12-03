@@ -21,7 +21,6 @@ public class MainView extends JFrame {
 	JButton local = new JButton("지역별 비교");
 	JButton date = new JButton("날짜별 비교");
 	JButton MandD = new JButton("조회/추가/수정/삭제");
-	JButton MainHelp = new JButton("?");
 
 	public MainView() {
 		setTitle("고갱이");
@@ -37,7 +36,6 @@ public class MainView extends JFrame {
 		local.setFont(new Font("맑은고딕", Font.BOLD, 20));
 		date.setFont(new Font("맑은고딕", Font.BOLD, 20));
 		MandD.setFont(new Font("맑은고딕", Font.BOLD, 20));
-		MainHelp.setFont(new Font("맑은고딕", Font.BOLD, 13));
 		p3.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
 		p2.setBorder(BorderFactory.createEmptyBorder(0, 100, 50, 100));
 		p4.setBorder(BorderFactory.createEmptyBorder(0, 730, 0, 0));
@@ -52,7 +50,6 @@ public class MainView extends JFrame {
 		p2.add(MandD);
 		p3.add(p);
 		p3.add(p1);
-		p4.add(MainHelp);
 		
 		// 메뉴바 추가
 		MenuBarView menuBar = new MenuBarView();
@@ -85,7 +82,6 @@ public class MainView extends JFrame {
 		});
 
 		search.addActionListener(new OpenActionListener());
-		MainHelp.addActionListener(new MainHelpActionListener());
 		commit.addActionListener(new CommitActionListener());
 
 		getContentPane().add(p3, "North");
