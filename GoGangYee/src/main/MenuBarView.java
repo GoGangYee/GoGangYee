@@ -52,7 +52,7 @@ public class MenuBarView extends JFrame {
 		saveMI.addActionListener(file.new SaveActionListener());
 		loadMI.addActionListener(file.new OpenActionListener());
 		commitMI.addActionListener(file.new CommitActionListener());
-		saveAir.addActionListener(new MainHelpActionListener());
+		saveAir.addActionListener(info.new AirSaveActionListener());
 		materialInfo.addActionListener(info.new MetarialInfoActionListener());
 		programInfo.addActionListener(info.new ProgramInfoActionListener());
 		infoMenu.addActionListener(info.new SupportInfoActionListener());

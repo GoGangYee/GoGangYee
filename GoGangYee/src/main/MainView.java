@@ -51,6 +51,9 @@ public class MainView extends JFrame {
 		p3.add(p);
 		p3.add(p1);
 		
+		// 파일 리스너 호츨
+		FileAct file = new FileAct();
+		
 		// 메뉴바 추가
 		MenuBarView menuBar = new MenuBarView();
 		setJMenuBar(menuBar.showMenuBar());
@@ -81,8 +84,8 @@ public class MainView extends JFrame {
 			}
 		});
 
-		search.addActionListener(new OpenActionListener());
-		commit.addActionListener(new CommitActionListener());
+		search.addActionListener(file.new OpenActionListener());
+		commit.addActionListener(file.new CommitActionListener());
 
 		getContentPane().add(p3, "North");
 		getContentPane().add(p2, "Center");
@@ -91,60 +94,5 @@ public class MainView extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(800, 500);
 		setVisible(true);
-	}
-}
-class CommitActionListener implements ActionListener {
-	public void actionPerformed(ActionEvent e) {
-		Statement stmt = null;
-
-		try {
-			Connection conn = DBconnect.getConnection();
-			stmt = conn.createStatement();
-			String sql1 = "LOAD DATA INFILE '" + (MainView.FileNameL).getText()
-					+ "' INTO TABLE " + DBconnect.table + " FIELDS TERMINATED BY ', '";
-			sql1 = sql1.replace("\\", "/");
-			String sql2 = "create database " + DBconnect.schema;
-			String sql3 = "use " + DBconnect.schema;
-			String sql4 = "create table " + DBconnect.table
-					+ "(date varchar(45) NOT NULL, local varchar(45) NOT NULL, no2 varchar(45), o3 varchar(45)"
-					+ ", co2 varchar(45), so2 varchar(45), microdust varchar(45),ultrafinemicrodust varchar(45));";
-
-			stmt.executeUpdate(sql2);
-			System.out.println(sql1);
-			stmt.executeUpdate(sql3);
-			System.out.println(sql2);
-			stmt.executeUpdate(sql4);
-			System.out.println(sql3);
-			stmt.executeQuery(sql1);
-			System.out.println(sql4);
-
-		} catch (SQLException e1) {
-			System.out.println(e1);
-		} finally {
-			DBconnect.close(stmt);
-		}
-	}
-}
-// 파일을 불러오는 액션리스너
-class OpenActionListener implements ActionListener {
-	JFileChooser chooser;
-	boolean flag = false;
-	OpenActionListener() {
-		chooser = new JFileChooser(); // 파일 다이얼로그 생성
-	}
-
-	public void actionPerformed(ActionEvent e) {
-		int ret = chooser.showOpenDialog(null);
-		if (ret != JFileChooser.APPROVE_OPTION) { // 사용자가 창을 강제로 닫았거나 취소 버튼을 누른 경우
-			JOptionPane.showMessageDialog(null, "파일을 선택하지 않았습니다.", "경고", JOptionPane.WARNING_MESSAGE);
-			return;
-		}
-
-		// 사용자가 파일을 선택하고 "열기" 버튼을 누른 경우
-		String filePath = chooser.getSelectedFile().getPath(); // 파일 경로명을 알아온다.
-		(MainView.FileNameL).setText(filePath);
-		System.out.println((MainView.FileNameL).getText());
-		System.out.println(flag);
-		
 	}
 }

@@ -196,13 +196,6 @@ public class MaterialView extends JFrame {
 
 	public void showSouth() {
 		JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		JButton helpB = new JButton("?");
-
-		helpB.setFont(new Font("¸¼Àº°íµñ", Font.BOLD, 13));
-
-		panel.add(helpB);
-
-		helpB.addActionListener(new HelpActionListener());
 
 		add(panel, BorderLayout.SOUTH);
 
