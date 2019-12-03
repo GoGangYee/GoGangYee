@@ -4,20 +4,17 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -25,8 +22,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import main.WindowCloseAction;
 
 public class MainView extends JFrame{
 	JPanel p=new JPanel();
@@ -117,36 +112,35 @@ public class MainView extends JFrame{
 	
 		addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e) {
-				Connection conn = DBconnect.getConnection();
-				ResultSet rs1=null;
-	            int rs2=0;
-	            int rs3=0;
-	            int rs=0;
-				
+				Connection conn=null;
+				Statement stmt1=null;
+	
 				try {
-					Statement stmt1=conn.createStatement();
-		            
-		               String sql="delete from " + DBconnect.table;
-		               String sql1="select * from " + DBconnect.table +
-		                     " into outfile 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/gogang.csv' " + 
-		                     "character set utf8 " + 
-		                     "fields terminated by ', ' " + 
-		                     "lines terminated by '\n'";
-		               String sql2="drop database "+DBconnect.schema;
-		               String sql3="use "+DBconnect.table;
-		               
-		               System.out.println(sql1);
-		               System.out.println(sql);
-		               System.out.println(sql2);
-		               
-		               rs3=stmt1.executeUpdate(sql3);
-		               rs1=stmt1.executeQuery(sql1);
-		               rs=stmt1.executeUpdate(sql);
-		               rs2=stmt1.executeUpdate(sql2);
-					DBconnect.close();
-				} catch(SQLException e1) {
+					conn = DBconnect.getConnection();
+					//연결
+					stmt1=conn.createStatement();
+				
+					String sql="delete from " + DBconnect.table;
+					String sql1="select * from " + DBconnect.table +
+							" into outfile 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/gogang.csv' " + 
+							"character set utf8 " + 
+							"fields terminated by ', ' " + 
+							"lines terminated by '\n'";
+					String sql2="drop database "+DBconnect.schema;
+					String sql3="use "+DBconnect.table;
+					
+					System.out.println(sql1);
+					System.out.println(sql);
+					System.out.println(sql2);
+					
+					stmt1.executeUpdate(sql3);
+					stmt1.executeQuery(sql1);
+					stmt1.executeUpdate(sql);
+					stmt1.executeUpdate(sql2);
+				}
+				catch(SQLException e1) {
 					System.out.println(e1);
-					DBconnect.close();
+					DBconnect.close(stmt1);
 				}
 			}		
 		});
@@ -178,37 +172,34 @@ public class MainView extends JFrame{
 
 	class CommitActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			Connection conn = DBconnect.getConnection();
+			Connection conn=null;
 			Statement stmt=null;
-			ResultSet rs1=null;
-	         int rs2=0;
-	         int rs3=0;
-	         int rs4=0;
-	         
+			
 			try {
+				conn = DBconnect.getConnection();
+				//연결
 				stmt=conn.createStatement();
 				String sql1="LOAD DATA INFILE '";
 				sql1+=FileNameL.getText();
 				sql1+="' INTO TABLE " + DBconnect.table + " FIELDS TERMINATED BY ','";
-				sql1=sql1.replace("\\","/");
+				sql1=sql1.replace("\\","/");				
 				String sql2="create database "+DBconnect.schema;
-	            String sql3="use "+DBconnect.schema;
-	            String sql4="create table "+DBconnect.table+"(date varchar(45) NOT NULL, local varchar(45) NOT NULL, no2 varchar(45), o3 varchar(45)" + 
-	                  ", co2 varchar(45), so2 varchar(45), microdust varchar(45),ultrafinemicrodust varchar(45));";
-	            
-	            
-	            rs2=stmt.executeUpdate(sql2);
-	            System.out.println(sql1);
-	            rs3=stmt.executeUpdate(sql3);
-	            System.out.println(sql2);
-	            rs4=stmt.executeUpdate(sql4);
-	            System.out.println(sql3);
-	            rs1=stmt.executeQuery(sql1);
-	            System.out.println(sql4);
-
+				String sql3="use "+DBconnect.schema;
+				String sql4="create table "+DBconnect.table+"(date varchar(45) NOT NULL, local varchar(45) NOT NULL, no2 varchar(45), o3 varchar(45)" + 
+						", co2 varchar(45), so2 varchar(45), microdust varchar(45),ultrafinemicrodust varchar(45));";
+				
+				
+				stmt.executeUpdate(sql2);
+				System.out.println(sql1);
+				stmt.executeUpdate(sql3);
+				System.out.println(sql2);
+				stmt.executeUpdate(sql4);
+				System.out.println(sql3);
+				stmt.executeQuery(sql1);
+				System.out.println(sql4);
+				
 			} catch (Exception e1) {
 				System.out.println(e1);
-			} finally {
 				DBconnect.close(stmt);
 			}
 		}
