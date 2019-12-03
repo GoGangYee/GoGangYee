@@ -206,12 +206,11 @@ public class MaterialView extends JFrame {
 
 		apply.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Connection conn = null;
+				Connection conn = DBconnect.getConnection();
 				Statement stmt = null;
 				ResultSet rs = null;
 
 				String value = "";
-				String url = "jdbc:mysql://localhost/gogang?characterEncoding=UTF-8&serverTimezone=UTC";
 
 				if (ck1.isSelected()) {
 					material = "no2";
@@ -233,9 +232,6 @@ public class MaterialView extends JFrame {
 				}
 
 				try {
-					Class.forName("com.mysql.cj.jdbc.Driver");
-
-					conn = DriverManager.getConnection(url, "root", "");
 					// 연결
 					stmt = conn.createStatement();
 
@@ -255,26 +251,14 @@ public class MaterialView extends JFrame {
 						value += v;
 						v = "";
 					}
-				} catch (ClassNotFoundException e1) {
-					System.out.println("드라이버 로딩 실패");
 				} catch (SQLException e1) {
-					System.out.println("에러: " + e1);
+					System.out.println(e1);
 				} finally {
-					try {
-						if (conn != null && !conn.isClosed()) {
-							conn.close();
-						}
-					}
-
-					catch (SQLException e1) {
-						e1.printStackTrace();
-					}
+					DBconnect.close(stmt);
 				}
 				String[] data = value.split("\n");
 
 				for (int i = 0; i < data.length; i++) {
-					// 여기서 에러가 뜸 Exception in thread "AWT-EventQueue-0"
-					// java.lang.NumberFormatException: empty String
 					data1[i] = Double.parseDouble(data[i]);
 					k++;
 				}

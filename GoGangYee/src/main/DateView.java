@@ -229,7 +229,7 @@ public class DateView extends JFrame {
 
 	class DrawActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			Connection conn = null;
+			Connection conn = DBconnect.getConnection();
 			Statement stmt1 = null;
 			Statement stmt2 = null;
 			Statement stmt3 = null;
@@ -242,7 +242,6 @@ public class DateView extends JFrame {
 			ResultSet rs4 = null;
 			ResultSet rs5 = null;
 			ResultSet rs6 = null;
-			String url = "jdbc:mysql://localhost/gogang?characterEncoding=UTF-8&serverTimezone=UTC";
 			String local = LocalChooseC.getSelectedItem().toString();
 			String date = "2018" + MonthT.getText() + DateT.getText();
 			String no2 = "";
@@ -253,10 +252,6 @@ public class DateView extends JFrame {
 			String ultrafinemicrodust = "";
 
 			try {
-				Class.forName("com.mysql.cj.jdbc.Driver");
-
-				conn = DriverManager.getConnection(url, "root", "asd970712!@");
-				// 연결
 				stmt1 = conn.createStatement();
 				stmt2 = conn.createStatement();
 				stmt3 = conn.createStatement();
@@ -264,12 +259,12 @@ public class DateView extends JFrame {
 				stmt5 = conn.createStatement();
 				stmt6 = conn.createStatement();
 
-				String sql1 = "select no2 from gogang where " + "date='" + date + "' and local='" + local + "'";
-				String sql2 = "select o3 from gogang where " + "date='" + date + "' and local='" + local + "'";
-				String sql3 = "select co2 from gogang where " + "date='" + date + "' and local='" + local + "'";
-				String sql4 = "select so2 from gogang where " + "date='" + date + "' and local='" + local + "'";
-				String sql5 = "select microdust from gogang where " + "date='" + date + "' and local='" + local + "'";
-				String sql6 = "select ultrafinemicrodust from gogang where " + "date='" + date + "' and local='" + local
+				String sql1 = "select no2 from " + DBconnect.table + " where " + "date='" + date + "' and local='" + local + "'";
+				String sql2 = "select o3 from " + DBconnect.table + " where " + "date='" + date + "' and local='" + local + "'";
+				String sql3 = "select co2 from " + DBconnect.table + " where " + "date='" + date + "' and local='" + local + "'";
+				String sql4 = "select so2 from " + DBconnect.table + " where " + "date='" + date + "' and local='" + local + "'";
+				String sql5 = "select microdust from " + DBconnect.table + " where " + "date='" + date + "' and local='" + local + "'";
+				String sql6 = "select ultrafinemicrodust from " + DBconnect.table + " where " + "date='" + date + "' and local='" + local
 						+ "'";
 
 				rs1 = stmt1.executeQuery(sql1);
@@ -320,18 +315,15 @@ public class DateView extends JFrame {
 						ultrafinemicrodust = "0";
 					}
 				}
-			} catch (ClassNotFoundException e1) {
-				System.out.println("드라이버 로딩 실패");
 			} catch (SQLException e1) {
-				System.out.println("에러: " + e1);
+				System.out.println(e1);
 			} finally {
-				try {
-					if (conn != null && !conn.isClosed()) {
-						conn.close();
-					}
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
+				DBconnect.close(stmt1);
+				DBconnect.close(stmt2);
+				DBconnect.close(stmt3);
+				DBconnect.close(stmt4);
+				DBconnect.close(stmt5);
+				DBconnect.close(stmt6);
 			}
 			String[] str1 = new String[4];
 			String[] str2 = new String[2];
