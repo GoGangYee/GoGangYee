@@ -58,7 +58,7 @@ public class MaterialView extends JFrame {
 		// 메뉴바 추가
 		MenuBarView menuBar = new MenuBarView();
 		setJMenuBar(menuBar.showMenuBar());
-		
+
 		setLayout(new BorderLayout(10, 10));
 		showNorth();
 		// showCenter();
@@ -169,21 +169,21 @@ public class MaterialView extends JFrame {
 	public void showCenter() {
 		if (material.equals("microdust") == true || material.equals("ultrafinemicrodust") == true) {
 			System.out.println("ewew");
-			LineGraph graph = new LineGraph(data1, 1, 50);
+			LineGraph graph = new LineGraph(data1, 1, 50, k);
 			graph.setPreferredSize(new Dimension(750, 170));
 			p1.add(graph);
 			add(p1, BorderLayout.CENTER);
 			repaint();
 		}
 		if (material.equals("co2")) {
-			LineGraph graph = new LineGraph(data1, 100, 50);
+			LineGraph graph = new LineGraph(data1, 100, 50, k);
 			graph.setPreferredSize(new Dimension(750, 170));
 			p1.add(graph);
 			add(p1, BorderLayout.CENTER);
 		}
 		if (material.equals("no2") == true || material.equals("o3") == true || material.equals("so2") == true) {
 			System.out.println("ewel");
-			LineGraph graph = new LineGraph(data1, 2000, 50);
+			LineGraph graph = new LineGraph(data1, 2000, 50, k);
 			graph.setPreferredSize(new Dimension(750, 170));
 			p1.add(graph);
 			add(p1, BorderLayout.CENTER);
@@ -230,9 +230,9 @@ public class MaterialView extends JFrame {
 					// 연결
 					stmt = conn.createStatement();
 
-					String sql = "select " + material + " from "+ DBconnect.table + " where date>='2018" + monthTF1.getText()
-							+ dayTF1.getText() + "'" + " and date<='2018" + monthTF2.getText() + dayTF2.getText() + "'"
-							+ " and local='" + localSelect.getSelectedItem().toString() + "'";
+					String sql = "select " + material + " from " + DBconnect.table + " where date>='2018"
+							+ monthTF1.getText() + dayTF1.getText() + "'" + " and date<='2018" + monthTF2.getText()
+							+ dayTF2.getText() + "'" + " and local='" + localSelect.getSelectedItem().toString() + "'";
 
 					System.out.println(sql);
 					rs = stmt.executeQuery(sql);
@@ -264,51 +264,5 @@ public class MaterialView extends JFrame {
 				showCenter();
 			}
 		});
-	}
-
-	class LineGraph extends JPanel { // 꺾은선그래프 그려주는클래스
-		// 사용법 : LineGraph(생성자에 데이터의 값이 담겨 있는 배열, 정수로 만들기 위해 곱해주는 변수, 간격 설정위한 정수)
-		// setDimension으로 크기 설정 해준다. 그러면 그래프 알아서 출력
-		int x[]; // x좌표 배열
-		int y[]; // y좌표 배열
-
-		LineGraph(double[] data, int multiply, int interval) { // 데이터 배열, 곱해줄 수, 간격
-			int[] x_tmp = new int[k];
-			int[] y_tmp = new int[k]; // 임시
-			for (int i = 0; i < k; i++) {
-				x_tmp[i] = (i + 1) * interval;
-				y_tmp[i] = (int) (data[i] * multiply); // 곱하기 해주는 상수의 수를 조절해줘야 한다.
-				// System.out.println(x_tmp[i]+" "+y_tmp[i]);
-				y_tmp[i] = 170 - y_tmp[i]; // 자바 그래픽은 y좌표가 위에서 부터 시작하므로 300에서 빼준다.
-			}
-
-			this.x = x_tmp;
-			this.y = y_tmp;
-			System.out.println(k);
-			for (int i = 0; i < k; i++)
-				System.out.println(x[i] + " " + y[i]);
-			// this.y=y;
-		}
-
-		public void paintComponent(Graphics g) {
-			super.paintComponent(g);
-
-			g.drawLine(30, 10, 30, 150); // Y축 그리기
-			g.drawLine(30, 150, 670, 150); // X축 그리기
-
-			for (int i = 0; i < this.x.length; i++) { // 점찍기
-				int x = this.x[i];
-				int y = this.y[i];
-				int ovalW = 7;
-				int ovalH = 7;
-				g.fillOval(x - 3, y - 3, ovalW, ovalH);
-			}
-
-			g.setColor(Color.RED);
-			g.drawPolyline(x, y, this.x.length); // 꺾은선 그래프 출력
-
-			setBackground(Color.WHITE);
-
-		}
 	}
 }
