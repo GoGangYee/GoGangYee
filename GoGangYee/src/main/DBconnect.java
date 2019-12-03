@@ -17,7 +17,7 @@ public class DBconnect {
 	private static Connection dbConn = null;
 	private static String url = "jdbc:mysql://localhost?characterEncoding=UTF-8&serverTimezone=UTC";
 	private static String user = "root";
-	private static String password = "password";
+	private static String password = "1569";
 	
 	// MySql DB 연동 메소드
 	public static Connection getConnection() {
