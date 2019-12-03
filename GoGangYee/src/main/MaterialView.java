@@ -42,15 +42,18 @@ public class MaterialView extends JFrame {
 	JTextField dayTF1 = new JTextField(2);
 	JTextField dayTF2 = new JTextField(2);
 	JRadioButton ck1 = new JRadioButton("이산화질소");
-	JRadioButton ck2 = new JRadioButton("일산화산소");
-	JRadioButton ck3 = new JRadioButton("아황산가스");
-	JRadioButton ck4 = new JRadioButton("오존");
+	JRadioButton ck2 = new JRadioButton("오존");
+	JRadioButton ck3 = new JRadioButton("이산화탄소");
+	JRadioButton ck4 = new JRadioButton("아황산가스");
 	JRadioButton ck5 = new JRadioButton("미세먼지");
 	JRadioButton ck6 = new JRadioButton("초미세먼지");
 	double[] data1 = new double[365];
 	int k = 0;
 	String material = "";
 	JPanel p1 = new JPanel();
+	
+	int startDate;	//시작 날짜, 끝 날짜
+	int endDate;
 
 	public MaterialView() {
 		setTitle("고갱이");
@@ -169,21 +172,21 @@ public class MaterialView extends JFrame {
 	public void showCenter() {
 		if (material.equals("microdust") == true || material.equals("ultrafinemicrodust") == true) {
 			System.out.println("ewew");
-			LineGraph graph = new LineGraph(data1, 1, 50, k);
+			LineGraph graph = new LineGraph(data1, 1, 100, k, startDate, endDate);
 			graph.setPreferredSize(new Dimension(750, 170));
 			p1.add(graph);
 			add(p1, BorderLayout.CENTER);
 			repaint();
 		}
 		if (material.equals("co2")) {
-			LineGraph graph = new LineGraph(data1, 100, 50, k);
+			LineGraph graph = new LineGraph(data1, 100, 100, k, startDate, endDate);
 			graph.setPreferredSize(new Dimension(750, 170));
 			p1.add(graph);
 			add(p1, BorderLayout.CENTER);
 		}
 		if (material.equals("no2") == true || material.equals("o3") == true || material.equals("so2") == true) {
 			System.out.println("ewel");
-			LineGraph graph = new LineGraph(data1, 2000, 50, k);
+			LineGraph graph = new LineGraph(data1, 2000, 100, k, startDate, endDate);
 			graph.setPreferredSize(new Dimension(750, 170));
 			p1.add(graph);
 			add(p1, BorderLayout.CENTER);
@@ -225,7 +228,7 @@ public class MaterialView extends JFrame {
 				if (ck6.isSelected()) {
 					material = "ultrafinemicrodust";
 				}
-
+				
 				try {
 					// 연결
 					stmt = conn.createStatement();
@@ -261,6 +264,8 @@ public class MaterialView extends JFrame {
 					System.out.println(data1[i]);
 				}
 				p1.removeAll();
+				startDate=Integer.parseInt(monthTF1.getText()+dayTF1.getText());
+				endDate=Integer.parseInt(monthTF2.getText()+dayTF2.getText());//라벨  설정
 				showCenter();
 			}
 		});
