@@ -1,9 +1,32 @@
 package main;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.sql.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JToolBar;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
  
@@ -36,12 +59,13 @@ class JPanel01 extends JPanel { // 1번째 패널
     
     public JPanel01(JPanelTest win) {
         this.win = win;
+        win.setBackground(Color.WHITE);
         setLayout(null);
-        
+        setBackground(Color.WHITE);
         setLayout(new BorderLayout(10, 10));
         showForm();
         // 메뉴바 생성
-     	MenuBarView menuBar = new MenuBarView();
+     	MenuBarView menuBar = new MenuBarView(null,null);
      	add(menuBar.showMenuBar(), BorderLayout.NORTH);
 		// 툴바 생성
 		toolBar = new JToolBar("Modify ToolBar");
@@ -87,6 +111,8 @@ class JPanel01 extends JPanel { // 1번째 패널
 		// 툴바를 추가함.
 		p1.add(toolBar);
 		panel.add(p1);
+		p1.setBackground(Color.WHITE);
+		panel.setBackground(Color.WHITE);
 		add(panel, BorderLayout.SOUTH);
         
 		// 조회하기 버튼을 클릭하면 실행하는 리스너
@@ -114,12 +140,32 @@ class JPanel01 extends JPanel { // 1번째 패널
 		JPanel ppmPanel = new JPanel(new BorderLayout());
 		JPanel μgPanel = new JPanel(new BorderLayout());
 		JPanel Westpanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		p1.setBackground(Color.WHITE);
+		p2.setBackground(Color.WHITE);
+		p3.setBackground(Color.WHITE);
+		p4.setBackground(Color.WHITE);
+		p4_1.setBackground(Color.WHITE);
+		p5.setBackground(Color.WHITE);
+		p6.setBackground(Color.WHITE);
+		p7.setBackground(Color.WHITE);
+		p7_0.setBackground(Color.WHITE);
+		p7_1.setBackground(Color.WHITE);
+		p7_2.setBackground(Color.WHITE);
+		//ppmPanel.setBackground(Color.WHITE);
+		//μgPanel.setBackground(Color.WHITE);
+		Westpanel.setBackground(Color.WHITE);
+		
 		
 		JPanel Eastpanel = new JPanel(new GridLayout(4,0));
 		JPanel E_p1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel E_p2 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel E_p3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel E_p4 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		Eastpanel.setBackground(Color.WHITE);
+		E_p1.setBackground(Color.WHITE);
+		E_p2.setBackground(Color.WHITE);
+		E_p3.setBackground(Color.WHITE);
+		E_p4.setBackground(Color.WHITE);
 		
 		JPanel Northpanel = new JPanel(new GridLayout(1,0));
 		Northpanel.setBorder(BorderFactory.createEmptyBorder(50, 10, 150, 10));
@@ -129,6 +175,9 @@ class JPanel01 extends JPanel { // 1번째 패널
 		Title.add(title);
 		Northpanel.add(Title);
 		add(Northpanel, BorderLayout.CENTER);
+		
+		Northpanel.setBackground(Color.WHITE);
+		Title.setBackground(Color.WHITE);
 		
 		JLabel l1 = new JLabel("다음은 조회한 데이터입니다.");
 		JLabel l2 = new JLabel("조회하기 버튼을 누르면 해당 값을 조회합니다.\n");
@@ -317,10 +366,11 @@ class Modify extends JPanel {
         setLayout(null);
         this.win = win;
         setLayout(new BorderLayout(10,10));
-        
+        win.setBackground(Color.WHITE);
+        setBackground(Color.WHITE);
         showForm();
         // 메뉴바 생성
-     	MenuBarView menuBar = new MenuBarView();
+     	MenuBarView menuBar = new MenuBarView(null,null);
      	add(menuBar.showMenuBar(), BorderLayout.NORTH);
         
         btn.addActionListener(new MyActionListener());
@@ -344,16 +394,39 @@ class Modify extends JPanel {
 		JPanel ppmPanel = new JPanel(new BorderLayout());
 		JPanel μgPanel = new JPanel(new BorderLayout());
 		JPanel Westpanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		p1.setBackground(Color.WHITE);
+		p2.setBackground(Color.WHITE);
+		p3.setBackground(Color.WHITE);
+		p4.setBackground(Color.WHITE);
+		p4_1.setBackground(Color.WHITE);
+		p5.setBackground(Color.WHITE);
+		p6.setBackground(Color.WHITE);
+		p7.setBackground(Color.WHITE);
+		p7_0.setBackground(Color.WHITE);
+		p7_1.setBackground(Color.WHITE);
+		p7_2.setBackground(Color.WHITE);
+		//ppmPanel.setBackground(Color.WHITE);
+		//μgPanel.setBackground(Color.WHITE);
+		Westpanel.setBackground(Color.WHITE);
+		
+		
 		
 		JPanel Eastpanel = new JPanel(new GridLayout(4,0));
 		JPanel E_p1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel E_p2 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel E_p3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel E_p4 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		Eastpanel.setBackground(Color.WHITE);
+		E_p1.setBackground(Color.WHITE);
+		E_p2.setBackground(Color.WHITE);
+		E_p3.setBackground(Color.WHITE);
+		E_p4.setBackground(Color.WHITE);
 		
 		JPanel Northpanel = new JPanel(new GridLayout(1,0));
 		Northpanel.setBorder(BorderFactory.createEmptyBorder(50, 10, 150, 10));
+		Northpanel.setBackground(Color.WHITE);
 		JPanel Title = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		Title.setBackground(Color.WHITE);
 		JLabel title = new JLabel("Modify Data");
 		title.setFont(new Font("고딕체", Font.PLAIN, 30));
 		Title.add(title);
@@ -576,10 +649,10 @@ class Delete extends JPanel {
       setLayout(null);
       this.win = win;
       setLayout(new BorderLayout(10,10));
-      
+      setBackground(Color.WHITE);
       showForm();
 	  // 메뉴바 생성
-	  MenuBarView menuBar = new MenuBarView();
+	  MenuBarView menuBar = new MenuBarView(null,null);
 	  add(menuBar.showMenuBar(), BorderLayout.NORTH);
       btn.addActionListener(new MyActionListener());
       apply.addActionListener(new ApplyActionListener());
@@ -608,6 +681,25 @@ class Delete extends JPanel {
 		JPanel E_p2 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel E_p3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel E_p4 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		
+		p1.setBackground(Color.WHITE);
+		p2.setBackground(Color.WHITE);
+		p3.setBackground(Color.WHITE);
+		p4.setBackground(Color.WHITE);
+		p4_1.setBackground(Color.WHITE);
+		p5.setBackground(Color.WHITE);
+		p5.setBackground(Color.WHITE);
+		p7.setBackground(Color.WHITE);
+		p7_0.setBackground(Color.WHITE);
+		p7_1.setBackground(Color.WHITE);
+		p7_2.setBackground(Color.WHITE);
+		//ppmPanel.setBackground(Color.WHITE);
+		Westpanel.setBackground(Color.WHITE);
+		Eastpanel.setBackground(Color.WHITE);
+		E_p1.setBackground(Color.WHITE);
+		E_p2.setBackground(Color.WHITE);
+		E_p3.setBackground(Color.WHITE);
+		E_p4.setBackground(Color.WHITE);
 		
 		JPanel Northpanel = new JPanel(new GridLayout(1,0));
 		Northpanel.setBorder(BorderFactory.createEmptyBorder(50, 10, 150, 10));
@@ -835,10 +927,10 @@ class Create extends JPanel{
 		setLayout(null);
 		this.win = win;
 		setLayout(new BorderLayout(10,10));
-	    
+		setBackground(Color.WHITE);
 	    showForm();
 	    // 메뉴바 생성
-     	MenuBarView menuBar = new MenuBarView();
+     	MenuBarView menuBar = new MenuBarView(null,null);
      	add(menuBar.showMenuBar(), BorderLayout.NORTH);
 	    btn.addActionListener(new MyActionListener());
 	    create.addActionListener(new createActionListener());
@@ -862,8 +954,23 @@ class Create extends JPanel{
 		JPanel E_p3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		
 		JPanel Northpanel = new JPanel(new GridLayout(1,0));
+		
+		p1.setBackground(Color.WHITE);
+		p2.setBackground(Color.WHITE);
+		p3.setBackground(Color.WHITE);
+		p4.setBackground(Color.WHITE);
+		p4_1.setBackground(Color.WHITE);
+		Westpanel.setBackground(Color.WHITE);
+		Eastpanel.setBackground(Color.WHITE);
+		E_p1.setBackground(Color.WHITE);
+		E_p2.setBackground(Color.WHITE);
+		E_p3.setBackground(Color.WHITE);
+		Northpanel.setBackground(Color.WHITE);
+		
+		
 		Northpanel.setBorder(BorderFactory.createEmptyBorder(50, 10, 150, 10));
 		JPanel Title = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		Title.setBackground(Color.WHITE);
 		JLabel title = new JLabel("Add Data");
 		title.setFont(new Font("고딕체", Font.PLAIN, 30));
 		Title.add(title);
@@ -924,6 +1031,15 @@ class Create extends JPanel{
 		JPanel p7_4 = new JPanel(new BorderLayout());
 		JPanel p7_5 = new JPanel(new BorderLayout());
 		JPanel p7_6 = new JPanel(new BorderLayout());
+		
+		p7.setBackground(Color.WHITE);
+		p7_0.setBackground(Color.WHITE);
+		p7_1.setBackground(Color.WHITE);
+		p7_2.setBackground(Color.WHITE);
+		p7_3.setBackground(Color.WHITE);
+		p7_4.setBackground(Color.WHITE);
+		p7_5.setBackground(Color.WHITE);
+		p7_6.setBackground(Color.WHITE);
 		
 		JPanel No2Panel = new JPanel(new BorderLayout());
 		JPanel O3Panel = new JPanel(new BorderLayout());
@@ -1019,7 +1135,6 @@ class JPanelTest extends JFrame {
     public Modify modify = null;
     public Delete delete = null;
     public Create create = null;
-    
     
     public void change(String panelName) { // 패널 1번과 2번 변경 후 재설정
  
