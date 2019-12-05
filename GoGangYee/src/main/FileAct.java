@@ -20,25 +20,14 @@ public class FileAct {
 		public void actionPerformed(ActionEvent e) {
 			Connection conn = DBconnect.getConnection();
 			Statement stmt1 = null;
-			int ret = chooser.showOpenDialog(null);
-			if (ret != JFileChooser.APPROVE_OPTION) { // 사용자가 창을 강제로 닫았거나 취소 버튼을 누른 경우
-				JOptionPane.showMessageDialog(null, "경로을 선택하지 않았습니다.", "경고", JOptionPane.WARNING_MESSAGE);
-				return;
-			}
 
-			// 사용자가 파일을 선택하고 "열기" 버튼을 누른 경우
-			String filePath = chooser.getSelectedFile().getPath(); // 파일 경로명을 알아온다.
-			(MainView.FileNameL).setText(filePath);
-			filePath = filePath.replace("\\", "/");
-			System.out.println(filePath);
-			
 			try {
 				stmt1 = conn.createStatement();
 
 				String sql = "delete from " + DBconnect.table;
 				String sql1 = "select * from " + DBconnect.table
-						+ " into outfile '" + filePath + "' "
-						+ "character set utf8 " + "fields terminated by ', ' " + "lines terminated by '\n'";
+						+ " into outfile 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/gogang.csv' "
+						+ "character set utf8 fields terminated by ', ' lines terminated by '\n'";
 				String sql2 = "drop database " + DBconnect.schema;
 				String sql3 = "use " + DBconnect.table;
 
