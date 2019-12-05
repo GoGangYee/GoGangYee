@@ -12,6 +12,7 @@ public class MainView extends JFrame {
 	JPanel p2 = new JPanel(new GridLayout(2, 2, 10, 10));
 	JPanel p3 = new JPanel(new GridLayout(2, 1, 5, 5));
 	JPanel p4 = new JPanel();
+	static JPanel p5 = new JPanel(new BorderLayout());
 
 	JLabel label = new JLabel("∞Ì  ∞ª  ¿Ã");
 	static JLabel FileNameL = new JLabel("");
@@ -86,10 +87,10 @@ public class MainView extends JFrame {
 
 		search.addActionListener(file.new OpenActionListener());
 		commit.addActionListener(file.new CommitActionListener());
-
-		getContentPane().add(p3, "North");
-		getContentPane().add(p2, "Center");
-		getContentPane().add(p4, "South");
+		p5.add(p3, BorderLayout.NORTH);
+		p5.add(p2, BorderLayout.CENTER);
+		p5.add(p4, BorderLayout.SOUTH);
+		add(p5);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(800, 500);

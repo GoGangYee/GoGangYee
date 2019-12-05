@@ -63,7 +63,12 @@ public class MenuBarView extends JFrame {
 		saveAir.addActionListener(info.new AirSaveActionListener());
 		materialInfo.addActionListener(info.new MetarialInfoActionListener());
 		programInfo.addActionListener(info.new ProgramInfoActionListener());
-		infoMenu.addActionListener(info.new SupportInfoActionListener());
+		supportInfo.addActionListener(info.new SupportInfoActionListener());
+		defaultBG.addActionListener(new ChangeBackGroundActionListener(1));
+		snowBG.addActionListener(new ChangeBackGroundActionListener(2));
+		yellowdustBG.addActionListener(new ChangeBackGroundActionListener(3));
+		nightBG.addActionListener(new ChangeBackGroundActionListener(4));
+		
 		
 		return menuBar;
 	}

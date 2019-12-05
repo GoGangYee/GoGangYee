@@ -12,16 +12,32 @@ import javax.swing.JOptionPane;
 public class FileAct {
 	// 저장하기 액션리스너
 	class SaveActionListener implements ActionListener {
+		JFileChooser chooser;
+
+		SaveActionListener() {
+			chooser = new JFileChooser(); // 파일 다이얼로그 생성
+		}
 		public void actionPerformed(ActionEvent e) {
 			Connection conn = DBconnect.getConnection();
 			Statement stmt1 = null;
+			int ret = chooser.showOpenDialog(null);
+			if (ret != JFileChooser.APPROVE_OPTION) { // 사용자가 창을 강제로 닫았거나 취소 버튼을 누른 경우
+				JOptionPane.showMessageDialog(null, "경로을 선택하지 않았습니다.", "경고", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
 
+			// 사용자가 파일을 선택하고 "열기" 버튼을 누른 경우
+			String filePath = chooser.getSelectedFile().getPath(); // 파일 경로명을 알아온다.
+			(MainView.FileNameL).setText(filePath);
+			filePath = filePath.replace("\\", "/");
+			System.out.println(filePath);
+			
 			try {
 				stmt1 = conn.createStatement();
 
 				String sql = "delete from " + DBconnect.table;
 				String sql1 = "select * from " + DBconnect.table
-						+ " into outfile 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/gogang.csv' "
+						+ " into outfile '" + filePath + "' "
 						+ "character set utf8 " + "fields terminated by ', ' " + "lines terminated by '\n'";
 				String sql2 = "drop database " + DBconnect.schema;
 				String sql3 = "use " + DBconnect.table;
@@ -80,7 +96,7 @@ public class FileAct {
 	// 파일을 불러오는 액션리스너
 	class OpenActionListener implements ActionListener {
 		JFileChooser chooser;
-		boolean flag = false;
+
 		OpenActionListener() {
 			chooser = new JFileChooser(); // 파일 다이얼로그 생성
 		}
@@ -96,8 +112,6 @@ public class FileAct {
 			String filePath = chooser.getSelectedFile().getPath(); // 파일 경로명을 알아온다.
 			(MainView.FileNameL).setText(filePath);
 			System.out.println((MainView.FileNameL).getText());
-			System.out.println(flag);
-			
 		}
 	}
 }
