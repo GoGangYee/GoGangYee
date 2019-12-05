@@ -29,6 +29,8 @@ public class DateView extends JFrame {
 			"남산", "노원구", "도봉구", "도산대로", "동대문구", "동작구", "도산대로", "동대문구", "동작구", "동작대로", "마포구", "북한산", "서대문구", "서초구",
 			"성동구", "성북구", "세곡", "송파구", "시흥대로", "신촌로", "양천구", "영등포구", "영등포로", "용산구", "은평구", "정릉로", "종로", "종로구", "중구",
 			"중랑구", "천호대로", "청계천로", "한강대로", "행주", "홍릉로", "화랑로" };
+	ImagePanel panel=new ImagePanel();
+	ImagePanel mp;
 	JComboBox<String> LocalChooseC = new JComboBox<>(region);
 	JTextField MonthT = new JTextField(2);
 	JTextField DateT = new JTextField(2);
@@ -36,12 +38,15 @@ public class DateView extends JFrame {
 	double[] data2 = new double[2];
 	String[] ppm = new String[4];
 	String[] ug = new String[2];
-	JPanel p6 = new JPanel(new GridLayout(1, 2, 0, 1000));
-	JPanel p5 = new JPanel(new GridLayout(1, 1));
+	ClearPanel p6 = new ClearPanel(new GridLayout(1, 2, 0, 1000));
+	//ClearPanel p5 = new ClearPanel(new GridLayout(1, 1));
+	ClearPanel p5 = new ClearPanel(new BorderLayout());
 	double concentration;
 
-	DateView() {
-		setTitle("DateView");
+	DateView(ImagePanel mp) {
+		setTitle("고갱이");
+		this.mp=mp;
+		panel.setLayout(new BorderLayout());
 		ppm[0] = "이산화질소";
 		ppm[1] = "오존";
 		ppm[2] = "이산화탄소";
@@ -49,12 +54,16 @@ public class DateView extends JFrame {
 		ug[0] = "미세먼지";
 		ug[1] = "초미세먼지";
 
-		// DrawingPanel drawingPanel = new DrawingPanel();
-		JPanel p = new JPanel(new BorderLayout());
-		JPanel p1 = new JPanel(new FlowLayout());
-		JPanel p2 = new JPanel(new FlowLayout());
-		JPanel p3 = new JPanel(new GridLayout(3, 1));
-		JPanel p4 = new JPanel();
+		// 메뉴바 추가
+		MenuBarView menuBar = new MenuBarView(mp,panel);
+		setJMenuBar(menuBar.showMenuBar());
+		add(panel);
+		
+		ClearPanel p = new ClearPanel(new BorderLayout());
+		ClearPanel p1 = new ClearPanel(new FlowLayout());
+		ClearPanel p2 = new ClearPanel(new FlowLayout());
+		ClearPanel p3 = new ClearPanel(new GridLayout(3, 1));
+		ClearPanel p4 = new ClearPanel();
 
 		JLabel label = new JLabel("날짜별 비교");
 		JLabel LocalChooseL = new JLabel("지역 선택");
@@ -65,12 +74,10 @@ public class DateView extends JFrame {
 		JLabel Today = new JLabel("오늘 고갱이의 기분");
 
 		JButton ApplyB = new JButton("적용");
-		JButton HelpB = new JButton("?");
 		JLabel star = new JLabel("* 이산화탄소는 본 값의 1/10값입니다.");
 
 		LocalChooseC.setPreferredSize(new Dimension(150, 25));
 		label.setFont(new Font("맑은고딕", Font.PLAIN, 30));
-		HelpB.setFont(new Font("맑은고딕", Font.BOLD, 13));
 		p2.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 70));
 		p.setBorder(BorderFactory.createEmptyBorder(10, 20, 0, 0));
 		p4.setBorder(BorderFactory.createEmptyBorder(0, 730, 0, 0));
@@ -91,24 +98,11 @@ public class DateView extends JFrame {
 		p.add(p3, BorderLayout.WEST);
 		// p5.add(Today);
 		p.add(p5, BorderLayout.CENTER);
-		p4.add(HelpB);
 		p6.add(star);
 
-		getContentPane().add(p, "North");
-		getContentPane().add(p6, "Center");
-		getContentPane().add(p4, "South");
-
-		HelpB.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null,
-						"이산화질소\r\n" + " * 코와 인후자극\r\n" + " * 호흡기에 나쁜 영향\r\n" + "\r\n" + "오존\r\n" + " * 눈 자극, 농작물 피해\r\n"
-								+ "\r\n" + "일산화탄소\r\n" + " * 산소공급 저조, 두통, 현기증 유발\r\n" + "\r\n" + "아황산가스\r\n"
-								+ " * 인체호흡기 질환\r\n" + " * 식물의 성장 방해\r\n" + "\r\n" + "미세먼지\r\n"
-								+ " * 아황산가스와 결합하여 호흡기질환 유발\r\n" + "\r\n" + "초미세먼지\r\n" + " * 아황산가스와 결합하여 호흡기질환 유발\r\n"
-								+ "\r\n" + "출처 - 수원시청",
-						"물질별 설명", JOptionPane.WARNING_MESSAGE);
-			}
-		});
+		panel.add(p, BorderLayout.NORTH);
+		panel.add(p6, BorderLayout.CENTER);
+		panel.add(p4, BorderLayout.SOUTH);
 		setSize(800, 500);
 		setVisible(true);
 
@@ -120,40 +114,43 @@ public class DateView extends JFrame {
 		BarGraph graph2 = new BarGraph(data2, ug, 50, 20, 1);
 		p6.add(graph1);
 		p6.add(graph2);
+		JLabel img;
 		if (concentration < 1) {
-			ImageIcon icon = new ImageIcon("C:\\Users\\ddodd\\OneDrive\\바탕 화면\\나쁨.png");
+			ImageIcon icon = new ImageIcon("./image/gogang0.png");
 			Image im = icon.getImage();
 			Image im2 = im.getScaledInstance(280, 100, Image.SCALE_DEFAULT);
 			ImageIcon icon2 = new ImageIcon(im2);
-			JLabel img = new JLabel(icon2);
+			img = new JLabel(icon2);
 			img.setIcon(icon2);
-			p5.add(img);
+			
 		} else if (concentration < 2) {
-			ImageIcon icon = new ImageIcon("C:\\Users\\ddodd\\OneDrive\\바탕 화면\\보통.png");
+			ImageIcon icon = new ImageIcon("./image/gogang1.png");
 			Image im = icon.getImage();
 			Image im2 = im.getScaledInstance(280, 100, Image.SCALE_DEFAULT);
 			ImageIcon icon2 = new ImageIcon(im2);
-			JLabel img = new JLabel(icon2);
+			img = new JLabel(icon2);
 			img.setIcon(icon2);
-			p5.add(img);
+			//p5.add(img);
 		} else if (concentration < 3) {
-			ImageIcon icon = new ImageIcon("C:\\Users\\ddodd\\OneDrive\\바탕 화면\\좋음.png");
+			ImageIcon icon = new ImageIcon("./image/gogang2.png");
 			Image im = icon.getImage();
 			Image im2 = im.getScaledInstance(280, 100, Image.SCALE_DEFAULT);
 			ImageIcon icon2 = new ImageIcon(im2);
-			JLabel img = new JLabel(icon2);
+			img = new JLabel(icon2);
 			img.setIcon(icon2);
-			p5.add(img);
+			//p5.add(img);
 		} else {
-			ImageIcon icon = new ImageIcon("C:\\Users\\ddodd\\OneDrive\\바탕 화면\\매우좋음.png");
+			ImageIcon icon = new ImageIcon("./image/gogang3.png");
 			Image im = icon.getImage();
 			Image im2 = im.getScaledInstance(280, 100, Image.SCALE_DEFAULT);
 			ImageIcon icon2 = new ImageIcon(im2);
-			JLabel img = new JLabel(icon2);
+			img = new JLabel(icon2);
 			img.setIcon(icon2);
-			p5.add(img);
+			//p5.add(img);
 		}
-		getContentPane().add(p6, "Center");
+		
+		p5.add(img,BorderLayout.CENTER);
+		panel.add(p6, BorderLayout.CENTER);
 		p6.revalidate();
 		p6.repaint();
 	}
