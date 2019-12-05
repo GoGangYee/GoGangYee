@@ -7,12 +7,12 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 
 public class MainView extends JFrame {
-	JPanel p = new JPanel();
-	JPanel p1 = new JPanel(new FlowLayout());
-	JPanel p2 = new JPanel(new GridLayout(2, 2, 10, 10));
-	JPanel p3 = new JPanel(new GridLayout(2, 1, 5, 5));
-	JPanel p4 = new JPanel();
-	static JPanel p5 = new JPanel(new BorderLayout());
+	ClearPanel p = new ClearPanel();
+	ClearPanel p1 = new ClearPanel(new FlowLayout());
+	ClearPanel p2 = new ClearPanel(new GridLayout(2, 2, 10, 10));
+	ClearPanel p3 = new ClearPanel(new GridLayout(2, 1, 5, 5));
+	ClearPanel p4 = new ClearPanel();
+	static ClearPanel p5 = new ClearPanel(new BorderLayout());
 
 	JLabel label = new JLabel("고  갱  이");
 	static JLabel FileNameL = new JLabel("");
@@ -25,6 +25,8 @@ public class MainView extends JFrame {
 
 	public MainView() {
 		setTitle("고갱이");
+		ImagePanel panel=new ImagePanel();
+		add(panel);
 		EtchedBorder eborder;
 
 		eborder = new EtchedBorder(EtchedBorder.RAISED);
@@ -56,14 +58,14 @@ public class MainView extends JFrame {
 		FileAct file = new FileAct();
 		
 		// 메뉴바 추가
-		MenuBarView menuBar = new MenuBarView();
+		MenuBarView menuBar = new MenuBarView(panel, panel);
 		setJMenuBar(menuBar.showMenuBar());
 
-		super.setLayout(new BorderLayout(3, 0));
+		panel.setLayout(new BorderLayout(3, 0));
 
 		date.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new DateView();
+				new DateView(panel);
 			}
 		});
 
@@ -75,13 +77,13 @@ public class MainView extends JFrame {
 
 		local.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new LocalView();
+				new LocalView(panel);
 			}
 		});
 
 		material.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new MaterialView();
+				new MaterialView(panel);
 			}
 		});
 
@@ -90,7 +92,7 @@ public class MainView extends JFrame {
 		p5.add(p3, BorderLayout.NORTH);
 		p5.add(p2, BorderLayout.CENTER);
 		p5.add(p4, BorderLayout.SOUTH);
-		add(p5);
+		panel.add(p5);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(800, 500);

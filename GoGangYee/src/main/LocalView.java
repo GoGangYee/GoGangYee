@@ -8,7 +8,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -27,20 +26,24 @@ import javax.swing.border.TitledBorder;
 
 public class LocalView extends JFrame {
 	String material = "";
+	ImagePanel mp;
 
-	LocalView() {
+	LocalView(ImagePanel mp) {
+		setTitle("고갱이");
+
 		String[] r = new String[4];
 		double[] result = new double[4];
 
-		setTitle("고갱이");
-		setLayout(new BorderLayout());
-		
+		ImagePanel panel=new ImagePanel();
+		//panel.setLayout(new BorderLayout());
+		add(panel);
+		this.mp=mp;
 		// 메뉴바 추가
-		MenuBarView menuBar = new MenuBarView();
+		MenuBarView menuBar = new MenuBarView(mp,panel);
 		setJMenuBar(menuBar.showMenuBar());
 		
-		JPanel content = new JPanel(new GridLayout(1, 2));
-		JPanel left = new JPanel(new BorderLayout());
+		ClearPanel content = new ClearPanel(new GridLayout(1, 2));
+		ClearPanel left = new ClearPanel(new BorderLayout());
 		JLabel name = new JLabel("지  역  별     비  교");
 		name.setFont(new Font("맑은고딕", Font.BOLD, 20));
 		name.setBorder(BorderFactory.createEmptyBorder(0, 90, 0, 0));
@@ -50,9 +53,9 @@ public class LocalView extends JFrame {
 		left.setBorder(BorderFactory.createEmptyBorder(10, 10, 20, 20));
 		content.add(left);
 
-		JPanel right = new JPanel(new BorderLayout()); // 물질 선택, 지역 선택, 날짜 넣을 부분
+		ClearPanel right = new ClearPanel(new BorderLayout()); // 물질 선택, 지역 선택, 날짜 넣을 부분
 
-		JPanel materials = new JPanel(new GridLayout(1, 2)); // gas(ppm), dust(㎍)넣을 부분
+		ClearPanel materials = new ClearPanel(new GridLayout(1, 2)); // gas(ppm), dust(㎍)넣을 부분
 		materials.setBorder(BorderFactory.createEmptyBorder(50, 0, 0, 0));
 
 		ButtonGroup radioBtns = new ButtonGroup(); // 물질 중복 선택 방지를 위한 버튼 그룹
@@ -98,7 +101,7 @@ public class LocalView extends JFrame {
 
 		right.add(materials, BorderLayout.NORTH);
 
-		JPanel regions = new JPanel(new GridLayout(4, 2, 0, 5));
+		ClearPanel regions = new ClearPanel(new GridLayout(4, 2, 0, 5));
 		regions.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
 		JLabel r1 = new JLabel("지역 1");
 		r1.setFont(new Font("맑은고딕", Font.BOLD, 15));
@@ -124,7 +127,7 @@ public class LocalView extends JFrame {
 
 		right.add(regions, BorderLayout.CENTER);
 
-		JPanel date = new JPanel(new FlowLayout());
+		ClearPanel date = new ClearPanel(new FlowLayout());
 		JLabel d = new JLabel("날짜    ");
 		d.setFont(new Font("맑은고딕", Font.BOLD, 15));
 		JLabel year = new JLabel("2018년");
@@ -226,12 +229,14 @@ public class LocalView extends JFrame {
 
 		right.add(date, BorderLayout.SOUTH);
 		content.add(right);
-		add(content, BorderLayout.CENTER);
+		//panel.add(content, BorderLayout.CENTER);
+		panel.add(content);
 
-		JPanel btns = new JPanel(new FlowLayout(FlowLayout.LEFT, 100, 0));
-		btns.setBorder(BorderFactory.createEmptyBorder(0, 635, 5, 5));
+//		ClearPanel btns = new ClearPanel(new FlowLayout(FlowLayout.LEFT, 100, 0));
+//		btns.setBorder(BorderFactory.createEmptyBorder(0, 635, 5, 5));
 
 		setSize(800, 500);
+		setResizable(false);
 		setVisible(true);
 	}
 }

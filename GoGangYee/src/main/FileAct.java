@@ -57,7 +57,7 @@ public class FileAct {
 				Connection conn = DBconnect.getConnection();
 				stmt = conn.createStatement();
 				String sql1 = "LOAD DATA INFILE '" + (MainView.FileNameL).getText()
-						+ "' INTO TABLE " + DBconnect.table + " FIELDS TERMINATED BY ', '";
+						+ "' INTO TABLE " + DBconnect.table + " FIELDS TERMINATED BY ','";
 				sql1 = sql1.replace("\\", "/");
 				String sql2 = "create database " + DBconnect.schema;
 				String sql3 = "use " + DBconnect.schema;

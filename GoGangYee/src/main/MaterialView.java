@@ -35,6 +35,9 @@ public class MaterialView extends JFrame {
 			"남산", "노원구", "도봉구", "도산대로", "동대문구", "동작구", "도산대로", "동대문구", "동작구", "동작대로", "마포구", "북한산", "서대문구", "서초구",
 			"성동구", "성북구", "세곡", "송파구", "시흥대로", "신촌로", "양천구", "영등포구", "영등포로", "용산구", "은평구", "정릉로", "종로", "종로구", "중구",
 			"중랑구", "천호대로", "청계천로", "한강대로", "행주", "홍릉로", "화랑로" };
+	ImagePanel imgPanel=new ImagePanel();
+	ImagePanel mp;	//메인패널
+	
 	JComboBox<String> localSelect = new JComboBox<>(region);
 	JButton apply = new JButton("적용");
 	JTextField monthTF1 = new JTextField(2);
@@ -50,19 +53,21 @@ public class MaterialView extends JFrame {
 	double[] data1 = new double[365];
 	int k = 0;
 	String material = "";
-	JPanel p1 = new JPanel();
+	ClearPanel p1 = new ClearPanel();
 	
 	int startDate;	//시작 날짜, 끝 날짜
 	int endDate;
 
-	public MaterialView() {
+	public MaterialView(ImagePanel mp) {
 		setTitle("고갱이");
-
+		this.mp=mp;
+		add(imgPanel);
+		imgPanel.setLayout(new BorderLayout(10,10));
 		// 메뉴바 추가
-		MenuBarView menuBar = new MenuBarView();
+		MenuBarView menuBar = new MenuBarView(mp, imgPanel);
 		setJMenuBar(menuBar.showMenuBar());
 
-		setLayout(new BorderLayout(10, 10));
+		//setLayout(new BorderLayout(10, 10));
 		showNorth();
 		// showCenter();
 		showSouth();
@@ -72,23 +77,23 @@ public class MaterialView extends JFrame {
 	}
 
 	public void showNorth() {
-		JPanel p1 = new JPanel(new BorderLayout()); // 지역, 날짜선택 영역
-		JPanel p1_0 = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JPanel p1_1 = new JPanel(new FlowLayout(FlowLayout.LEFT)); // 지역선택
-		JPanel p1_4 = new JPanel(new BorderLayout());
-		JPanel p1_2 = new JPanel(new FlowLayout(FlowLayout.LEFT)); // From date Choose
-		JPanel p1_3 = new JPanel(new FlowLayout(FlowLayout.LEFT)); // to date choose
-		JPanel p1_5 = new JPanel(new BorderLayout());
-		JPanel p1_6 = new JPanel(new FlowLayout(FlowLayout.LEFT)); // From date Choose
-		JPanel p1_7 = new JPanel(new BorderLayout());
-		JPanel p2 = new JPanel(new BorderLayout()); // 물질선택 칸
-		JPanel p2_0 = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		JPanel p2_1 = new JPanel(new BorderLayout()); // 물질 선택 왼쪽
-		JPanel p2_2 = new JPanel(new BorderLayout()); // 물질 선택 오른쪽
-		JPanel p2_1_1 = new JPanel(new BorderLayout());
-		JPanel p2_2_1 = new JPanel(new BorderLayout());
-		JPanel p2_3 = new JPanel(new GridLayout(1, 2));
-		JPanel panel = new JPanel(new GridLayout(1, 2)); // 전체패널
+		ClearPanel p1 = new ClearPanel(new BorderLayout()); // 지역, 날짜선택 영역
+		ClearPanel p1_0 = new ClearPanel(new FlowLayout(FlowLayout.LEFT));
+		ClearPanel p1_1 = new ClearPanel(new FlowLayout(FlowLayout.LEFT)); // 지역선택
+		ClearPanel p1_4 = new ClearPanel(new BorderLayout());
+		ClearPanel p1_2 = new ClearPanel(new FlowLayout(FlowLayout.LEFT)); // From date Choose
+		ClearPanel p1_3 = new ClearPanel(new FlowLayout(FlowLayout.LEFT)); // to date choose
+		ClearPanel p1_5 = new ClearPanel(new BorderLayout());
+		ClearPanel p1_6 = new ClearPanel(new FlowLayout(FlowLayout.LEFT)); // From date Choose
+		ClearPanel p1_7 = new ClearPanel(new BorderLayout());
+		ClearPanel p2 = new ClearPanel(new BorderLayout()); // 물질선택 칸
+		ClearPanel p2_0 = new ClearPanel(new FlowLayout(FlowLayout.CENTER));
+		ClearPanel p2_1 = new ClearPanel(new BorderLayout()); // 물질 선택 왼쪽
+		ClearPanel p2_2 = new ClearPanel(new BorderLayout()); // 물질 선택 오른쪽
+		ClearPanel p2_1_1 = new ClearPanel(new BorderLayout());
+		ClearPanel p2_2_1 = new ClearPanel(new BorderLayout());
+		ClearPanel p2_3 = new ClearPanel(new GridLayout(1, 2));
+		ClearPanel panel = new ClearPanel(new GridLayout(1, 2)); // 전체패널
 
 		JLabel txt1 = new JLabel("물질별 비교");
 		JLabel txt2 = new JLabel("지역 선택");
@@ -111,6 +116,12 @@ public class MaterialView extends JFrame {
 		radioBtns.add(ck4);
 		radioBtns.add(ck5);
 		radioBtns.add(ck6);
+//		ck1.setOpaque(false);
+//		ck2.setOpaque(false);
+//		ck3.setOpaque(false);
+//		ck4.setOpaque(false);
+//		ck5.setOpaque(false);
+//		ck6.setOpaque(false);
 
 		localSelect.setPreferredSize(new Dimension(200, 25));
 		txt1.setFont(new Font("맑은고딕", Font.PLAIN, 30));
@@ -166,7 +177,7 @@ public class MaterialView extends JFrame {
 		panel.add(p1); // 지역, 날짜선택 칸
 		panel.add(p2); // 물질선택 칸
 
-		add(panel, BorderLayout.NORTH);
+		imgPanel.add(panel, BorderLayout.NORTH);
 	}
 
 	public void showCenter() {
@@ -175,21 +186,21 @@ public class MaterialView extends JFrame {
 			LineGraph graph = new LineGraph(data1, 1, 100, k, startDate, endDate);
 			graph.setPreferredSize(new Dimension(750, 170));
 			p1.add(graph);
-			add(p1, BorderLayout.CENTER);
+			imgPanel.add(p1, BorderLayout.CENTER);
 			repaint();
 		}
 		if (material.equals("co2")) {
 			LineGraph graph = new LineGraph(data1, 100, 100, k, startDate, endDate);
 			graph.setPreferredSize(new Dimension(750, 170));
 			p1.add(graph);
-			add(p1, BorderLayout.CENTER);
+			imgPanel.add(p1, BorderLayout.CENTER);
 		}
 		if (material.equals("no2") == true || material.equals("o3") == true || material.equals("so2") == true) {
 			System.out.println("ewel");
 			LineGraph graph = new LineGraph(data1, 2000, 100, k, startDate, endDate);
 			graph.setPreferredSize(new Dimension(750, 170));
 			p1.add(graph);
-			add(p1, BorderLayout.CENTER);
+			imgPanel.add(p1, BorderLayout.CENTER);
 		}
 		p1.revalidate();
 		p1.repaint();
@@ -198,9 +209,9 @@ public class MaterialView extends JFrame {
 	}
 
 	public void showSouth() {
-		JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		ClearPanel panel = new ClearPanel(new FlowLayout(FlowLayout.RIGHT));
 
-		add(panel, BorderLayout.SOUTH);
+		imgPanel.add(panel, BorderLayout.SOUTH);
 
 		apply.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

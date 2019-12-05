@@ -1,16 +1,11 @@
 package main;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.awt.Container;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class MenuBarView extends JFrame {
@@ -33,6 +28,13 @@ public class MenuBarView extends JFrame {
 	JMenuItem programInfo = new JMenuItem("프로그램 정보");
 	JMenuItem supportInfo = new JMenuItem("후원하기");
 	JPanel panel = new JPanel();
+	ImagePanel p;
+	ImagePanel m;	//메인뷰꺼
+	
+	public MenuBarView(ImagePanel m, ImagePanel p) {
+		this.m=m;
+		this.p=p;
+	}
 
 	public JMenuBar showMenuBar() {
 
@@ -64,10 +66,10 @@ public class MenuBarView extends JFrame {
 		materialInfo.addActionListener(info.new MetarialInfoActionListener());
 		programInfo.addActionListener(info.new ProgramInfoActionListener());
 		supportInfo.addActionListener(info.new SupportInfoActionListener());
-		defaultBG.addActionListener(new ChangeBackGroundActionListener(1));
-		snowBG.addActionListener(new ChangeBackGroundActionListener(2));
-		yellowdustBG.addActionListener(new ChangeBackGroundActionListener(3));
-		nightBG.addActionListener(new ChangeBackGroundActionListener(4));
+		defaultBG.addActionListener(new ChangeBackGroundActionListener(1,m,p));
+		snowBG.addActionListener(new ChangeBackGroundActionListener(2,m,p));
+		yellowdustBG.addActionListener(new ChangeBackGroundActionListener(3,m,p));
+		nightBG.addActionListener(new ChangeBackGroundActionListener(4,m,p));
 		
 		
 		return menuBar;
