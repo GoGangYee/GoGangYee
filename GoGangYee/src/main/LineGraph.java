@@ -18,7 +18,8 @@ class LineGraph extends JPanel { // 꺾은선그래프 그려주는클래스
 		int[] x_tmp = new int[k];
 		int[] y_tmp = new int[k]; // 임시
 		for (int i = 0; i < k; i++) {
-			if(i==0);
+			if(i==0)
+				x_tmp[0]=50;
 			else
 				x_tmp[i] = x_tmp[i-1] + interval;
 			y_tmp[i] = (int) (data[i] * multiply); // 곱하기 해주는 상수의 수를 조절해줘야 한다.

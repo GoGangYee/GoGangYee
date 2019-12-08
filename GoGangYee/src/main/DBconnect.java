@@ -15,9 +15,9 @@ public class DBconnect {
 	public static String table = "gogang";
 	// 알려져서는 안되는 정보들을 숨겨놓음
 	private static Connection dbConn = null;
-	private static String url = "jdbc:mysql://localhost?characterEncoding=UTF-8&serverTimezone=UTC";
+	private static String url = "jdbc:mysql://localhost/gogang?characterEncoding=UTF-8&serverTimezone=UTC";
 	private static String user = "root";
-	private static String password = "1569";
+	private static String password = "asd970712!@";
 	
 	// MySql DB 연동 메소드
 	public static Connection getConnection() {

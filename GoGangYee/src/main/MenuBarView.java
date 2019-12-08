@@ -31,6 +31,7 @@ public class MenuBarView extends JFrame {
 	ImagePanel p;
 	ImagePanel m;	//∏ﬁ¿Œ∫‰≤®
 	
+	public MenuBarView() {}
 	public MenuBarView(ImagePanel m, ImagePanel p) {
 		this.m=m;
 		this.p=p;

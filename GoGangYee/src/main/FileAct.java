@@ -27,7 +27,7 @@ public class FileAct {
 				String sql = "delete from " + DBconnect.table;
 				String sql1 = "select * from " + DBconnect.table
 						+ " into outfile 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/gogang.csv' "
-						+ "character set utf8 fields terminated by ', ' lines terminated by '\n'";
+						+ "character set utf8 fields terminated by ',' lines terminated by '\n'";
 				String sql2 = "drop database " + DBconnect.schema;
 				String sql3 = "use " + DBconnect.table;
 
@@ -57,7 +57,7 @@ public class FileAct {
 				Connection conn = DBconnect.getConnection();
 				stmt = conn.createStatement();
 				String sql1 = "LOAD DATA INFILE '" + (MainView.FileNameL).getText()
-						+ "' INTO TABLE " + DBconnect.table + " FIELDS TERMINATED BY ','";
+						+ "' INTO TABLE " + DBconnect.table + " FIELDS TERMINATED BY ', '";
 				sql1 = sql1.replace("\\", "/");
 				String sql2 = "create database " + DBconnect.schema;
 				String sql3 = "use " + DBconnect.schema;

@@ -86,6 +86,12 @@ public class MainView extends JFrame {
 				new MaterialView(panel);
 			}
 		});
+		
+		addWindowListener(new WindowAdapter(){
+			public void windowClosing(WindowEvent e) {
+				DBconnect.close();
+			}		
+		});
 
 		search.addActionListener(file.new OpenActionListener());
 		commit.addActionListener(file.new CommitActionListener());
